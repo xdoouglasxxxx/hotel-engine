@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Site público — Home (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+html{color-scheme:dark}body{margin:0;font-family:Inter,system-ui,sans-serif;color:#E8ECEB;background:#0F1413}input,textarea,select{background:#111817;color:#E8ECEB}input::placeholder,textarea::placeholder{color:#7A8886}
+a{color:#2BB7A5}a:hover{color:#5FD3C3}
+</style>
+</helmet>
+<div style="width: 390px; height: 1560px; box-sizing: border-box; background: #0F1413; display: flex; flex-direction: column; overflow: hidden; font-family: Inter, system-ui, sans-serif">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: #171D1C; border-bottom: 1px solid #263030">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <div style="width: 32px; height: 32px; border-radius: 8px; background: {{accent}}"></div>
+      <div style="display: flex; flex-direction: column">
+        <span style="font-size: 15px; font-weight: 700; letter-spacing: -0.01em">[NOME DO HOTEL]</span>
+        <span style="font-size: 11px; color: #9AA8A6">[Cidade, UF]</span>
+      </div>
+    </div>
+    <button aria-label="Abrir menu" style="width: 44px; height: 44px; border: 1px solid #2A3433; border-radius: 10px; background: #171D1C; display: flex; align-items: center; justify-content: center">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8ECEB" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </header>
+
+  <section style="position: relative; height: 300px; background: #243030; display: flex; align-items: flex-end">
+    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #9AA8A6; font-size: 12px">[FOTO PRINCIPAL DO HOTEL]</div>
+    <div style="position: relative; padding: 16px; color: #FFFFFF; background: linear-gradient(180deg, rgba(21,32,31,0) 0%, rgba(21,32,31,0.78) 100%); width: 100%; box-sizing: border-box">
+      <h1 style="margin: 0 0 4px; font-size: 24px; line-height: 1.15; font-weight: 700">[Slogan curto do hotel]</h1>
+      <p style="margin: 0; font-size: 13px; opacity: 0.92">[Uma frase sobre a hospedagem e a região]</p>
+    </div>
+  </section>
+
+  <section style="margin: -28px 16px 0; background: #171D1C; border: 1px solid #263030; border-radius: 14px; padding: 14px; box-shadow: 0 6px 18px rgba(21,32,31,0.08); display: flex; flex-direction: column; gap: 10px">
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Check-in
+        <input type="text" value="Sex, 14 nov" style="height: 44px; border: 1px solid #2A3433; border-radius: 10px; padding: 0 12px; font-size: 14px; font-family: inherit; color: #E8ECEB">
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Check-out
+        <input type="text" value="Dom, 16 nov" style="height: 44px; border: 1px solid #2A3433; border-radius: 10px; padding: 0 12px; font-size: 14px; font-family: inherit; color: #E8ECEB">
+      </label>
+    </div>
+    <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Hóspedes
+      <input type="text" value="2 adultos · 0 crianças" style="height: 44px; border: 1px solid #2A3433; border-radius: 10px; padding: 0 12px; font-size: 14px; font-family: inherit; color: #E8ECEB">
+    </label>
+    <a href="Site-Busca.dc.html" style="height: 48px; border-radius: 10px; background: {{accent}}; color: #0B1413; font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; text-decoration: none">Ver disponibilidade</a>
+    <p style="margin: 0; font-size: 11px; color: #9AA8A6; text-align: center">Melhor preço garantido no site oficial · Sem taxa de reserva</p>
+  </section>
+
+  <section style="padding: 22px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; align-items: baseline; justify-content: space-between">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 700">Acomodações</h2>
+      <a href="Site-Busca.dc.html" style="font-size: 13px; font-weight: 600">Ver todas</a>
+    </div>
+
+    <article style="background: #171D1C; border: 1px solid #263030; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column">
+      <div style="height: 150px; background: #243030; display: flex; align-items: center; justify-content: center; color: #9AA8A6; font-size: 12px">[FOTO · Suíte Padrão]</div>
+      <div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start">
+          <div style="display: flex; flex-direction: column">
+            <span style="font-size: 15px; font-weight: 700">Suíte Padrão</span>
+            <span style="font-size: 12px; color: #9AA8A6">Até 2 hóspedes · 22 m² · Cama queen</span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: flex-end">
+            <span style="font-size: 16px; font-weight: 700">R$ 250</span>
+            <span style="font-size: 11px; color: #9AA8A6">por noite</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap">
+          <span style="font-size: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(43,183,165,0.14); color: #5FD3C3; font-weight: 600">Wi-Fi</span>
+          <span style="font-size: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(43,183,165,0.14); color: #5FD3C3; font-weight: 600">Ar-condicionado</span>
+          <span style="font-size: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(43,183,165,0.14); color: #5FD3C3; font-weight: 600">TV Smart</span>
+        </div>
+      </div>
+    </article>
+
+    <article style="background: #171D1C; border: 1px solid #263030; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column">
+      <div style="height: 150px; background: #243030; display: flex; align-items: center; justify-content: center; color: #9AA8A6; font-size: 12px">[FOTO · Suíte Superior]</div>
+      <div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start">
+          <div style="display: flex; flex-direction: column">
+            <span style="font-size: 15px; font-weight: 700">Suíte Superior</span>
+            <span style="font-size: 12px; color: #9AA8A6">Até 3 hóspedes · 30 m² · Varanda</span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: flex-end">
+            <span style="font-size: 16px; font-weight: 700">R$ 380</span>
+            <span style="font-size: 11px; color: #9AA8A6">por noite</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap">
+          <span style="font-size: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(43,183,165,0.14); color: #5FD3C3; font-weight: 600">Frigobar</span>
+          <span style="font-size: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(43,183,165,0.14); color: #5FD3C3; font-weight: 600">Varanda</span>
+          <span style="font-size: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(43,183,165,0.14); color: #5FD3C3; font-weight: 600">+2</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section style="padding: 22px 16px 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+    <div style="background: #171D1C; border: 1px solid #263030; border-radius: 12px; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; align-items: center; text-align: center">
+      <span style="font-size: 16px; font-weight: 700">[4,8]</span>
+      <span style="font-size: 11px; color: #9AA8A6">avaliação média</span>
+    </div>
+    <div style="background: #171D1C; border: 1px solid #263030; border-radius: 12px; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; align-items: center; text-align: center">
+      <span style="font-size: 16px; font-weight: 700">Pix</span>
+      <span style="font-size: 11px; color: #9AA8A6">ou cartão</span>
+    </div>
+    <div style="background: #171D1C; border: 1px solid #263030; border-radius: 12px; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; align-items: center; text-align: center">
+      <span style="font-size: 16px; font-weight: 700">Grátis</span>
+      <span style="font-size: 11px; color: #9AA8A6">cancelar até [X] dias</span>
+    </div>
+  </section>
+
+  <section style="padding: 22px 16px 0; display: flex; flex-direction: column; gap: 10px">
+    <h2 style="margin: 0; font-size: 18px; font-weight: 700">Sobre a hospedagem</h2>
+    <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #C7D0CE">[Descrição configurável do hotel: localização, diferenciais, regras da casa. Vem de site_settings.]</p>
+    <div style="height: 120px; border-radius: 12px; background: #243030; display: flex; align-items: center; justify-content: center; color: #9AA8A6; font-size: 12px">[MAPA · como chegar]</div>
+  </section>
+
+  <footer style="margin-top: auto; padding: 18px 16px 20px; background: #0B0F0E; color: #CBD5D3; display: flex; flex-direction: column; gap: 8px; font-size: 12px">
+    <span style="font-weight: 700; color: #FFFFFF; font-size: 14px">[NOME DO HOTEL]</span>
+    <span>[Endereço completo] · [Telefone público]</span>
+    <span>[Instagram] · Política de cancelamento · Privacidade</span>
+    <span style="color: #8A9896">Powered by Hotel Engine</span>
+  </footer>
+
+  <a href="https://wa.me/5500000000000" aria-label="Falar no WhatsApp" style="position: absolute; right: 16px; bottom: 96px; width: 52px; height: 52px; border-radius: 999px; background: #2BB673; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(21,32,31,0.25)">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M9 10a1 1 0 0 0 1 1h0a6 6 0 0 0 3 3h0a1 1 0 0 0 1-1"/></svg>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2BB7A5","options":["#2BB7A5","#7CB4FF","#F0A36B","#C9A0FF"]},"$preview":{"width":390,"height":1560}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#2BB7A5' };
+  }
+}
+</script>
+</body>
+</html>

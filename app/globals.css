@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  ::selection { background: theme('colors.coral.400'); color: white; }
+}
+
+@layer utilities {
+  .section-eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.22em] text-coral-600;
+  }
+}
+
+/* react-day-picker: cores do tema (parametrizadas por tenant no M3) */
+.rdp { --rdp-cell-size: 40px; --rdp-accent-color: #1e5262; margin: 0; }
+.rdp-day_selected, .rdp-day_range_start, .rdp-day_range_end {
+  background-color: #1e5262 !important; color: #fff !important;
+}
+.rdp-day_range_middle { background-color: #d5ecef !important; color: #0f2e38 !important; }
+.rdp-day_disabled { text-decoration: line-through; opacity: .35; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,34 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-10-30T13:20:00Z" },
+  "title": "Hotel Engine — UI (site e painel)",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 390, "h": 1560, "title": "Site · Home (mobile)" },
+    "Site-Busca.dc.html": { "x": 470, "y": 0, "w": 390, "h": 1320, "title": "Site · Disponibilidade" },
+    "Site-Reserva.dc.html": { "x": 940, "y": 0, "w": 390, "h": 1460, "title": "Site · Reserva em 3 passos" },
+    "Site-MinhaReserva.dc.html": { "x": 1410, "y": 0, "w": 390, "h": 1040, "title": "Site · Minha reserva" },
+    "Painel-Hoje.dc.html": { "x": 0, "y": 1680, "w": 1440, "h": 920, "title": "Painel · Hoje", "expand": "fill" },
+    "Painel-Calendario.dc.html": { "x": 1520, "y": 1680, "w": 1440, "h": 920, "title": "Painel · Calendário (tape chart)", "expand": "fill" },
+    "Painel-Reservas.dc.html": { "x": 0, "y": 2720, "w": 1440, "h": 920, "title": "Painel · Reservas + detalhe", "expand": "fill" },
+    "Painel-Config.dc.html": { "x": 1520, "y": 2720, "w": 1440, "h": 920, "title": "Painel · Configurações do hotel", "expand": "fill" }
+  },
+  "order": [
+    "Main.dc.html",
+    "Site-Busca.dc.html",
+    "Site-Reserva.dc.html",
+    "Site-MinhaReserva.dc.html",
+    "Painel-Hoje.dc.html",
+    "Painel-Calendario.dc.html",
+    "Painel-Reservas.dc.html",
+    "Painel-Config.dc.html"
+  ],
+  "notes": {
+    "t-site": { "x": 0, "y": -300, "text": "Site público — hóspede (mobile-first)", "kind": "title1", "maxW": 1800 },
+    "t-painel": { "x": 0, "y": 1380, "text": "Painel do anfitrião — desktop, denso (PMS)", "kind": "title1", "maxW": 2960 },
+    "s-site": { "x": 1880, "y": 0, "w": 320, "text": "Fluxo do hóspede em 3 passos: datas → quarto → dados/pagamento. Preço, noites e disponibilidade sempre calculados no servidor (Postgres). Marca, textos e contato vêm de site_settings por tenant; os placeholders [ ] marcam o que é configurável.", "fill": "blue" },
+    "s-painel": { "x": 3040, "y": 1680, "w": 340, "text": "Referências de mercado cobertas: tape chart (Cloudbeds/Mews), hoje com chegadas/saídas, inbox unificado, aprovação de reserva, tarifas por período, bloqueios, equipe e papéis, configuração do site por propriedade. Multi-propriedade no seletor do topo (fase E2+).", "fill": "teal" }
+  },
+  "designSystems": []
+}

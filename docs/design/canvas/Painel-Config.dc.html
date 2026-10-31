@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Painel — Configurações do hotel</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+html{color-scheme:dark}body{margin:0;font-family:Inter,system-ui,sans-serif;color:#E8ECEB;background:#0F1413}input,textarea,select{background:#111817;color:#E8ECEB}input::placeholder,textarea::placeholder{color:#7A8886}
+a{color:#2BB7A5}a:hover{color:#5FD3C3}
+</style>
+</helmet>
+<div style="min-height: 920px; box-sizing: border-box; display: flex; flex-wrap: wrap; background: #0F1413; font-family: Inter, system-ui, sans-serif; font-size: 13px">
+
+  <nav aria-label="Menu principal" style="width: 220px; flex: 0 0 220px; background: #0B0F0E; color: #CBD5D3; display: flex; flex-direction: column; padding: 14px 12px; gap: 4px; box-sizing: border-box">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 8px 14px">
+      <div style="width: 28px; height: 28px; border-radius: 7px; background: {{accent}}"></div>
+      <div style="display: flex; flex-direction: column"><span style="font-weight: 700; color: #FFFFFF; font-size: 13px">Hotel Engine</span><span style="font-size: 11px; color: #8A9896">Painel do anfitrião</span></div>
+    </div>
+    <button style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border: 1px solid #1F2A29; border-radius: 8px; background: #151D1C; color: #FFFFFF; font-family: inherit; font-size: 12px; font-weight: 600; margin-bottom: 10px"><span>[NOME DO HOTEL]</span><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A9896" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg></button>
+    <a href="Painel-Hoje.dc.html" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Hoje</a>
+    <a href="Painel-Calendario.dc.html" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Calendário</a>
+    <a href="Painel-Reservas.dc.html" style="display: flex; justify-content: space-between; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none"><span>Reservas</span><span style="font-size: 11px; font-weight: 700; background: #E0A030; color: #0B1413; border-radius: 999px; padding: 1px 7px">3</span></a>
+    <a href="#inbox" style="display: flex; justify-content: space-between; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none"><span>Mensagens</span><span style="font-size: 11px; font-weight: 700; background: #1F2A29; color: #FFFFFF; border-radius: 999px; padding: 1px 7px">5</span></a>
+    <a href="#hospedes" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Hóspedes</a>
+    <a href="#quartos" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Quartos e tarifas</a>
+    <a href="#relatorios" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Relatórios</a>
+    <a href="Painel-Config.dc.html" style="display: flex; padding: 9px 10px; border-radius: 8px; background: #1F2A29; color: #FFFFFF; text-decoration: none; font-weight: 600">Configurações</a>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 20px; background: #171D1C; border-bottom: 1px solid #263030">
+      <div style="display: flex; flex-direction: column">
+        <h1 style="margin: 0; font-size: 18px; font-weight: 700">Configurações do hotel</h1>
+        <span style="font-size: 12px; color: #9AA8A6">Tudo aqui alimenta o site público e as regras de reserva · salvo em site_settings</span>
+      </div>
+      <div style="display: flex; gap: 8px">
+        <a href="Main.dc.html" style="height: 34px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-size: 12px; font-weight: 600; display: flex; align-items: center; text-decoration: none; color: #E8ECEB">Ver site público</a>
+        <button style="height: 34px; padding: 0 14px; border: 0; border-radius: 8px; background: {{accent}}; color: #0B1413; font-family: inherit; font-size: 12px; font-weight: 600">Salvar alterações</button>
+      </div>
+    </header>
+
+    <div style="display: flex; gap: 12px; padding: 14px 20px 20px; align-items: flex-start; flex-wrap: wrap">
+
+      <nav aria-label="Seções" style="flex: 0 0 200px; background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 6px; display: flex; flex-direction: column; gap: 2px; font-size: 12px">
+        <a href="#site" style="padding: 8px 10px; border-radius: 7px; background: rgba(43,183,165,0.14); color: {{accent}}; font-weight: 700; text-decoration: none">Site e marca</a>
+        <a href="#politicas" style="padding: 8px 10px; border-radius: 7px; color: #E8ECEB; text-decoration: none">Políticas e horários</a>
+        <a href="#pagamentos" style="padding: 8px 10px; border-radius: 7px; color: #E8ECEB; text-decoration: none">Pagamentos</a>
+        <a href="#notificacoes" style="padding: 8px 10px; border-radius: 7px; color: #E8ECEB; text-decoration: none">Notificações</a>
+        <a href="#canais" style="padding: 8px 10px; border-radius: 7px; color: #E8ECEB; text-decoration: none">Canais e integrações</a>
+        <a href="#equipe" style="padding: 8px 10px; border-radius: 7px; color: #E8ECEB; text-decoration: none">Equipe e papéis</a>
+        <a href="#dominio" style="padding: 8px 10px; border-radius: 7px; color: #E8ECEB; text-decoration: none">Domínio</a>
+        <a href="#plano" style="padding: 8px 10px; border-radius: 7px; color: #E8ECEB; text-decoration: none">Plano e faturamento</a>
+      </nav>
+
+      <div style="flex: 1 1 560px; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+
+        <section id="site" style="grid-column: 1 / span 2; background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 14px; font-weight: 700">Site e marca</h2><span style="font-size: 11px; color: #9AA8A6">Pré-visualização atualiza ao salvar (cache 60 s)</span></div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Nome do hotel<input type="text" value="[NOME DO HOTEL]" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Slogan<input type="text" value="[Slogan curto]" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Moeda e fuso<input type="text" value="BRL · America/Sao_Paulo" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+          </div>
+          <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Descrição (aparece em "Sobre" e nos buscadores)<textarea rows="2" style="border: 1px solid #2A3433; border-radius: 8px; padding: 8px 10px; font-family: inherit; font-size: 13px; resize: none">[Descrição do hotel, localização e diferenciais]</textarea></label>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Endereço<input type="text" value="[Rua, número, bairro]" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">WhatsApp público<input type="tel" value="[+55 ...]" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Instagram<input type="text" value="[@usuario]" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: end">
+            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Logo<div style="height: 72px; border: 1px dashed #4E5C5A; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #8A9896; font-weight: 500">arraste ou clique</div></div>
+            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Foto principal<div style="height: 72px; border: 1px dashed #4E5C5A; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #8A9896; font-weight: 500">1600 × 900</div></div>
+            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Cor de destaque<div style="height: 36px; display: flex; gap: 6px; align-items: center"><span style="width: 28px; height: 28px; border-radius: 7px; background: {{accent}}; outline: 2px solid #E8ECEB; outline-offset: 2px"></span><span style="width: 28px; height: 28px; border-radius: 7px; background: #5B9BFF"></span><span style="width: 28px; height: 28px; border-radius: 7px; background: #7A3E2E"></span><span style="width: 28px; height: 28px; border-radius: 7px; background: #2F5D3A"></span></div></div>
+            <label style="display: flex; align-items: center; gap: 8px; height: 36px; font-size: 12px"><input type="checkbox" checked style="width: 18px; height: 18px">Mostrar "Powered by Hotel Engine"</label>
+          </div>
+        </section>
+
+        <section id="politicas" style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 14px; font-weight: 700">Políticas e horários</h2>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Check-in a partir de<input type="text" value="14:00" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Check-out até<input type="text" value="12:00" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Cancelamento grátis até<input type="text" value="7 dias antes" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Depois disso, retém<input type="text" value="100% do sinal" style="height: 36px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 10px; font-family: inherit; font-size: 13px"></label>
+          </div>
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 12px"><span>Aprovação manual de novas reservas</span><input type="checkbox" checked style="width: 18px; height: 18px"></label>
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 12px"><span>Aceita pets de pequeno porte</span><input type="checkbox" style="width: 18px; height: 18px"></label>
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 12px"><span>Mínimo de noites padrão</span><input type="text" value="1" style="width: 56px; height: 32px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 8px; font-family: inherit; font-size: 13px; text-align: center"></label>
+        </section>
+
+        <section id="pagamentos" style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 14px; font-weight: 700">Pagamentos</h2>
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 12px"><span>Exigir sinal para confirmar</span><input type="checkbox" checked style="width: 18px; height: 18px"></label>
+          <label style="display: flex; align-items: center; justify-content: space-between; font-size: 12px"><span>Percentual do sinal</span><input type="text" value="30%" style="width: 64px; height: 32px; border: 1px solid #2A3433; border-radius: 8px; padding: 0 8px; font-family: inherit; font-size: 13px; text-align: center"></label>
+          <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #2A3433; border-radius: 8px"><span style="font-weight: 600">Pix</span><span style="color: #3DD68C; font-weight: 600">ativo</span></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #2A3433; border-radius: 8px"><span style="font-weight: 600">Cartão (até 3×)</span><span style="color: #3DD68C; font-weight: 600">ativo</span></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #2A3433; border-radius: 8px"><span style="font-weight: 600">Gateway</span><span style="color: #9AA8A6">[provedor] · chaves em variáveis de ambiente</span></div>
+          </div>
+          <span style="font-size: 11px; color: #9AA8A6">O painel nunca exibe nem armazena dados de cartão; só o status retornado pelo gateway.</span>
+        </section>
+
+        <section id="notificacoes" style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+          <h2 style="margin: 0; font-size: 14px; font-weight: 700">Notificações</h2>
+          <div style="display: grid; grid-template-columns: 1fr auto auto; gap: 6px 14px; font-size: 12px; align-items: center">
+            <span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Evento</span><span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Hóspede</span><span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Equipe</span>
+            <span>Pedido recebido</span><input type="checkbox" checked style="width: 16px; height: 16px"><input type="checkbox" checked style="width: 16px; height: 16px">
+            <span>Reserva confirmada</span><input type="checkbox" checked style="width: 16px; height: 16px"><input type="checkbox" style="width: 16px; height: 16px">
+            <span>Lembrete 48 h antes do check-in</span><input type="checkbox" checked style="width: 16px; height: 16px"><input type="checkbox" style="width: 16px; height: 16px">
+            <span>Pagamento pendente</span><input type="checkbox" checked style="width: 16px; height: 16px"><input type="checkbox" checked style="width: 16px; height: 16px">
+            <span>Cancelamento</span><input type="checkbox" checked style="width: 16px; height: 16px"><input type="checkbox" checked style="width: 16px; height: 16px">
+            <span>Pedido de avaliação pós-estadia</span><input type="checkbox" checked style="width: 16px; height: 16px"><input type="checkbox" style="width: 16px; height: 16px"></div>
+          <span style="font-size: 11px; color: #9AA8A6">Canais: e-mail e WhatsApp (provedor em Canais e integrações).</span>
+        </section>
+
+        <section id="canais" style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+          <h2 style="margin: 0; font-size: 14px; font-weight: 700">Canais e integrações</h2>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #2A3433; border-radius: 8px; font-size: 12px"><span style="font-weight: 600">WhatsApp Business API</span><span style="color: #3DD68C; font-weight: 600">conectado</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #2A3433; border-radius: 8px; font-size: 12px"><span style="font-weight: 600">Google Business Profile</span><button style="height: 28px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Conectar</button></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #2A3433; border-radius: 8px; font-size: 12px"><span style="font-weight: 600">Channel manager (OTAs)</span><span style="color: #8A9896">fase E4</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #2A3433; border-radius: 8px; font-size: 12px"><span style="font-weight: 600">Exportar iCal</span><button style="height: 28px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Copiar link</button></div>
+        </section>
+
+        <section id="equipe" style="grid-column: 1 / span 2; background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 14px; font-weight: 700">Equipe e papéis</h2><button style="height: 32px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 12px; font-weight: 600">+ Convidar por e-mail</button></div>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; min-width: 560px">
+              <thead><tr style="color: #9AA8A6; text-align: left; background: #1B2221"><th style="padding: 8px 10px; font-weight: 600; border-bottom: 1px solid #263030">Pessoa</th><th style="padding: 8px 10px; font-weight: 600; border-bottom: 1px solid #263030">Papel</th><th style="padding: 8px 10px; font-weight: 600; border-bottom: 1px solid #263030">Permissões</th><th style="padding: 8px 10px; font-weight: 600; border-bottom: 1px solid #263030">Último acesso</th><th style="padding: 8px 10px; border-bottom: 1px solid #263030"></th></tr></thead>
+              <tbody>
+                <tr><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A; font-weight: 600">[Você]</td><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A">Proprietário</td><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A">tudo, inclusive faturamento e equipe</td><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A">agora</td><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A"></td></tr>
+                <tr><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A; font-weight: 600">[Recepção]</td><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A">Recepção</td><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A">reservas, check-in/out, mensagens; sem tarifas nem configurações</td><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A">hoje, 13:40</td><td style="padding: 8px 10px; border-bottom: 1px solid #222B2A; text-align: right"><button style="height: 26px; padding: 0 8px; border: 1px solid #2A3433; border-radius: 6px; background: #171D1C; font-family: inherit; font-size: 11px">Editar</button></td></tr>
+                <tr><td style="padding: 8px 10px; font-weight: 600">[Governança]</td><td style="padding: 8px 10px">Limpeza</td><td style="padding: 8px 10px">só lista de saídas e status do quarto</td><td style="padding: 8px 10px">ontem</td><td style="padding: 8px 10px; text-align: right"><button style="height: 26px; padding: 0 8px; border: 1px solid #2A3433; border-radius: 6px; background: #171D1C; font-family: inherit; font-size: 11px">Editar</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <span style="font-size: 11px; color: #9AA8A6">Papéis são aplicados por RLS no banco, não só na interface. Fase E2 adiciona o escopo por propriedade.</span>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2BB7A5","options":["#2BB7A5","#7CB4FF","#F0A36B","#C9A0FF"]},"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#2BB7A5' };
+  }
+}
+</script>
+</body>
+</html>

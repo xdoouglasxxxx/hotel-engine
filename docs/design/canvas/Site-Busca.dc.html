@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Site público — Disponibilidade (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+html{color-scheme:dark}body{margin:0;font-family:Inter,system-ui,sans-serif;color:#E8ECEB;background:#0F1413}input,textarea,select{background:#111817;color:#E8ECEB}input::placeholder,textarea::placeholder{color:#7A8886}
+a{color:#2BB7A5}a:hover{color:#5FD3C3}
+</style>
+</helmet>
+<div style="width: 390px; height: 1320px; box-sizing: border-box; background: #0F1413; display: flex; flex-direction: column; overflow: hidden; font-family: Inter, system-ui, sans-serif">
+
+  <header style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #171D1C; border-bottom: 1px solid #263030">
+    <a href="Main.dc.html" aria-label="Voltar" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8ECEB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+    </a>
+    <div style="flex: 1; display: flex; flex-direction: column">
+      <span style="font-size: 14px; font-weight: 700">14 – 16 nov · 2 noites</span>
+      <span style="font-size: 12px; color: #9AA8A6">2 adultos · Alterar datas</span>
+    </div>
+    <button style="height: 36px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 10px; background: #171D1C; font-size: 12px; font-weight: 600; font-family: inherit">Filtros</button>
+  </header>
+
+  <section style="padding: 14px 16px 0; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <span style="font-size: 13px; font-weight: 600">Novembro 2026</span>
+      <div style="display: flex; gap: 4px">
+        <button aria-label="Mês anterior" style="width: 32px; height: 32px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8ECEB" stroke-width="2.5" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button aria-label="Próximo mês" style="width: 32px; height: 32px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8ECEB" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; font-size: 11px; text-align: center; color: #9AA8A6; font-weight: 600">
+      <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; font-size: 12px; text-align: center">
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; color: #4E5C5A">1</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; color: #4E5C5A">2</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; color: #4E5C5A">3</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; color: #4E5C5A">4</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; color: #4E5C5A">5</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; color: #4E5C5A">6</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; color: #4E5C5A">7</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">8</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">9</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">10</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; text-decoration: line-through; color: #4E5C5A">11</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; text-decoration: line-through; color: #4E5C5A">12</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">13</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; background: {{accent}}; color: #0B1413; border-radius: 10px 0 0 10px; font-weight: 700">14</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(43,183,165,0.30); font-weight: 600">15</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; background: {{accent}}; color: #0B1413; border-radius: 0 10px 10px 0; font-weight: 700">16</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">17</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">18</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">19</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">20</span>
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center">21</span>
+    </div>
+    <div style="display: flex; gap: 14px; font-size: 11px; color: #9AA8A6">
+      <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{accent}}"></span>Selecionado</span>
+      <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #4E5C5A"></span>Indisponível</span>
+      <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: rgba(43,183,165,0.30)"></span>Mínimo 2 noites</span>
+    </div>
+  </section>
+
+  <section style="padding: 18px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <h2 style="margin: 0; font-size: 16px; font-weight: 700">3 acomodações disponíveis</h2>
+
+    <article style="background: #171D1C; border: 1px solid #263030; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; gap: 12px">
+        <div style="width: 96px; height: 96px; border-radius: 10px; background: #243030; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #9AA8A6; font-size: 10px; text-align: center">[FOTO]</div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 15px; font-weight: 700">Suíte Padrão</span>
+          <span style="font-size: 12px; color: #9AA8A6">Até 2 hóspedes · 22 m²</span>
+          <span style="font-size: 12px; color: #5FD3C3; font-weight: 600">Última unidade nestas datas</span>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #263030; padding-top: 10px">
+        <div style="display: flex; flex-direction: column">
+          <span style="font-size: 17px; font-weight: 700">R$ 500 <span style="font-size: 12px; font-weight: 500; color: #9AA8A6">· 2 noites</span></span>
+          <span style="font-size: 11px; color: #9AA8A6">R$ 250/noite · impostos inclusos</span>
+        </div>
+        <a href="Site-Reserva.dc.html" style="height: 44px; padding: 0 16px; border-radius: 10px; background: {{accent}}; color: #0B1413; font-weight: 600; font-size: 14px; display: flex; align-items: center; text-decoration: none">Reservar</a>
+      </div>
+    </article>
+
+    <article style="background: #171D1C; border: 1px solid #263030; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; gap: 12px">
+        <div style="width: 96px; height: 96px; border-radius: 10px; background: #243030; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #9AA8A6; font-size: 10px; text-align: center">[FOTO]</div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 15px; font-weight: 700">Suíte Superior</span>
+          <span style="font-size: 12px; color: #9AA8A6">Até 3 hóspedes · 30 m² · Varanda</span>
+          <span style="font-size: 12px; color: #9AA8A6">Café da manhã incluso</span>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #263030; padding-top: 10px">
+        <div style="display: flex; flex-direction: column">
+          <span style="font-size: 17px; font-weight: 700">R$ 760 <span style="font-size: 12px; font-weight: 500; color: #9AA8A6">· 2 noites</span></span>
+          <span style="font-size: 11px; color: #9AA8A6">R$ 380/noite · impostos inclusos</span>
+        </div>
+        <a href="Site-Reserva.dc.html" style="height: 44px; padding: 0 16px; border-radius: 10px; background: {{accent}}; color: #0B1413; font-weight: 600; font-size: 14px; display: flex; align-items: center; text-decoration: none">Reservar</a>
+      </div>
+    </article>
+
+    <article style="background: #171D1C; border: 1px solid #263030; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; gap: 12px">
+        <div style="width: 96px; height: 96px; border-radius: 10px; background: #243030; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #9AA8A6; font-size: 10px; text-align: center">[FOTO]</div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 15px; font-weight: 700">Suíte Master</span>
+          <span style="font-size: 12px; color: #9AA8A6">Até 4 hóspedes · 42 m² · Cozinha</span>
+          <span style="font-size: 12px; color: #F5A524; font-weight: 600">Mínimo 3 noites nestas datas</span>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #263030; padding-top: 10px">
+        <div style="display: flex; flex-direction: column">
+          <span style="font-size: 17px; font-weight: 700; color: #8A9896">R$ 520 <span style="font-size: 12px; font-weight: 500">/ noite</span></span>
+          <span style="font-size: 11px; color: #9AA8A6">Ajuste as datas para reservar</span>
+        </div>
+        <button disabled style="height: 44px; padding: 0 16px; border-radius: 10px; background: #263030; color: #8A9896; font-weight: 600; font-size: 14px; border: 0; font-family: inherit">Indisponível</button>
+      </div>
+    </article>
+  </section>
+
+  <section style="margin: 18px 16px 0; padding: 12px 14px; background: #171D1C; border: 1px dashed #4E5C5A; border-radius: 12px; display: flex; flex-direction: column; gap: 4px">
+    <span style="font-size: 13px; font-weight: 600">Precisa de ajuda com as datas?</span>
+    <span style="font-size: 12px; color: #9AA8A6">Fale com a recepção pelo WhatsApp. Reservas por telefone seguem as mesmas tarifas.</span>
+  </section>
+
+  <div style="margin-top: auto; padding: 12px 16px 16px; background: #171D1C; border-top: 1px solid #263030; display: flex; justify-content: space-between; align-items: center">
+    <div style="display: flex; flex-direction: column">
+      <span style="font-size: 12px; color: #9AA8A6">Selecionado</span>
+      <span style="font-size: 15px; font-weight: 700">Suíte Padrão · R$ 500</span>
+    </div>
+    <a href="Site-Reserva.dc.html" style="height: 48px; padding: 0 18px; border-radius: 10px; background: {{accent}}; color: #0B1413; font-weight: 600; font-size: 15px; display: flex; align-items: center; text-decoration: none">Continuar</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2BB7A5","options":["#2BB7A5","#7CB4FF","#F0A36B","#C9A0FF"]},"$preview":{"width":390,"height":1320}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#2BB7A5' };
+  }
+}
+</script>
+</body>
+</html>

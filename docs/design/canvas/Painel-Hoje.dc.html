@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Painel — Hoje</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+html{color-scheme:dark}body{margin:0;font-family:Inter,system-ui,sans-serif;color:#E8ECEB;background:#0F1413}input,textarea,select{background:#111817;color:#E8ECEB}input::placeholder,textarea::placeholder{color:#7A8886}
+a{color:#2BB7A5}a:hover{color:#5FD3C3}
+</style>
+</helmet>
+<div style="min-height: 920px; box-sizing: border-box; display: flex; flex-wrap: wrap; background: #0F1413; font-family: Inter, system-ui, sans-serif; font-size: 13px">
+
+  <nav aria-label="Menu principal" style="width: 220px; flex: 0 0 220px; background: #0B0F0E; color: #CBD5D3; display: flex; flex-direction: column; padding: 14px 12px; gap: 4px; box-sizing: border-box">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 8px 14px">
+      <div style="width: 28px; height: 28px; border-radius: 7px; background: {{accent}}"></div>
+      <div style="display: flex; flex-direction: column"><span style="font-weight: 700; color: #FFFFFF; font-size: 13px">Hotel Engine</span><span style="font-size: 11px; color: #8A9896">Painel do anfitrião</span></div>
+    </div>
+    <button style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border: 1px solid #1F2A29; border-radius: 8px; background: #151D1C; color: #FFFFFF; font-family: inherit; font-size: 12px; font-weight: 600; margin-bottom: 10px">
+      <span>[NOME DO HOTEL]</span>
+      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A9896" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg>
+    </button>
+    <a href="Painel-Hoje.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; background: #1F2A29; color: #FFFFFF; text-decoration: none; font-weight: 600">Hoje</a>
+    <a href="Painel-Calendario.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Calendário</a>
+    <a href="Painel-Reservas.dc.html" style="display: flex; align-items: center; justify-content: space-between; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none"><span>Reservas</span><span style="font-size: 11px; font-weight: 700; background: #E0A030; color: #0B1413; border-radius: 999px; padding: 1px 7px">3</span></a>
+    <a href="#inbox" style="display: flex; align-items: center; justify-content: space-between; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none"><span>Mensagens</span><span style="font-size: 11px; font-weight: 700; background: #1F2A29; color: #FFFFFF; border-radius: 999px; padding: 1px 7px">5</span></a>
+    <a href="#hospedes" style="display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Hóspedes</a>
+    <a href="#quartos" style="display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Quartos e tarifas</a>
+    <a href="#relatorios" style="display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Relatórios</a>
+    <a href="Painel-Config.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Configurações</a>
+    <div style="margin-top: auto; padding: 10px; border-top: 1px solid #1F2A29; display: flex; align-items: center; gap: 10px; font-size: 12px">
+      <div style="width: 28px; height: 28px; border-radius: 999px; background: #1F2A29"></div>
+      <div style="display: flex; flex-direction: column"><span style="color: #FFFFFF; font-weight: 600">[Usuário]</span><span style="color: #8A9896; font-size: 11px">Proprietário</span></div>
+    </div>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 20px; background: #171D1C; border-bottom: 1px solid #263030">
+      <div style="display: flex; flex-direction: column">
+        <h1 style="margin: 0; font-size: 18px; font-weight: 700">Hoje · Sex, 30 out 2026</h1>
+        <span style="font-size: 12px; color: #9AA8A6">Atualizado agora · tempo real ativo</span>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <label style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-size: 12px">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA8A6" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="search" placeholder="Buscar reserva, hóspede, telefone" style="border: 0; outline: 0; font-family: inherit; font-size: 12px; width: 220px">
+        </label>
+        <button style="height: 36px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 12px; font-weight: 600">Bloquear datas</button>
+        <button style="height: 36px; padding: 0 12px; border: 0; border-radius: 8px; background: {{accent}}; color: #0B1413; font-family: inherit; font-size: 12px; font-weight: 600">+ Nova reserva</button>
+      </div>
+    </header>
+
+    <section aria-label="Indicadores do dia" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; padding: 16px 20px 0">
+      <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Ocupação hoje</span><span style="font-size: 22px; font-weight: 700">4 / 6</span><span style="font-size: 11px; color: #3DD68C">67% · +1 vs. ontem</span></div>
+      <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Chegadas</span><span style="font-size: 22px; font-weight: 700">2</span><span style="font-size: 11px; color: #9AA8A6">1 já fez check-in</span></div>
+      <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Saídas</span><span style="font-size: 22px; font-weight: 700">1</span><span style="font-size: 11px; color: #F5A524">saldo a receber R$ 392</span></div>
+      <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Pendentes de aprovação</span><span style="font-size: 22px; font-weight: 700; color: #F5A524">3</span><span style="font-size: 11px; color: #9AA8A6">mais antiga há 2 h</span></div>
+      <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Receita do mês</span><span style="font-size: 22px; font-weight: 700">R$ 18,4 mil</span><span style="font-size: 11px; color: #3DD68C">82% da meta</span></div>
+      <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #9AA8A6; font-weight: 600">Diária média (ADR)</span><span style="font-size: 22px; font-weight: 700">R$ 312</span><span style="font-size: 11px; color: #9AA8A6">RevPAR R$ 209</span></div>
+    </section>
+
+    <section style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 14px 20px 20px">
+
+      <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #263030"><h2 style="margin: 0; font-size: 13px; font-weight: 700">Chegadas e saídas</h2><a href="Painel-Calendario.dc.html" style="font-size: 12px; font-weight: 600">Calendário</a></div>
+        <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+          <li style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #222B2A"><span style="font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 6px; background: rgba(61,214,140,0.15); color: #3DD68C">IN</span><div style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede A] · Suíte Superior</span><span style="font-size: 11px; color: #9AA8A6">2 noites · 2 adultos · chegada prevista 20h</span></div><button style="height: 30px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Check-in</button></li>
+          <li style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #222B2A"><span style="font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 6px; background: rgba(61,214,140,0.15); color: #3DD68C">IN</span><div style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede B] · Suíte Padrão</span><span style="font-size: 11px; color: #9AA8A6">3 noites · check-in feito 14:20</span></div><span style="font-size: 11px; color: #3DD68C; font-weight: 600">Hospedado</span></li>
+          <li style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #222B2A"><span style="font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 6px; background: rgba(245,165,36,0.15); color: #F5A524">OUT</span><div style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede C] · Suíte Master</span><span style="font-size: 11px; color: #9AA8A6">saída até 12h · saldo R$ 392</span></div><button style="height: 30px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Check-out</button></li>
+          <li style="display: flex; align-items: center; gap: 10px; padding: 10px 14px"><span style="font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 6px; background: #263030; color: #9AA8A6">STAY</span><div style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 600">2 hóspedes em estadia</span><span style="font-size: 11px; color: #9AA8A6">Suíte Padrão 2 · Suíte Superior 2</span></div></div></li>
+        </ul>
+      </div>
+
+      <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #263030"><h2 style="margin: 0; font-size: 13px; font-weight: 700">Aguardando sua aprovação</h2><a href="Painel-Reservas.dc.html" style="font-size: 12px; font-weight: 600">Ver todas</a></div>
+        <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+          <li style="display: flex; flex-direction: column; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #222B2A">
+            <div style="display: flex; justify-content: space-between"><span style="font-weight: 600">[Hóspede D] · Suíte Padrão</span><span style="font-size: 11px; color: #F5A524; font-weight: 600">há 2 h</span></div>
+            <span style="font-size: 11px; color: #9AA8A6">14 → 16 nov · 2 noites · R$ 560 · Pix (sinal pago)</span>
+            <div style="display: flex; gap: 6px"><button style="height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: #2BB673; color: #0B1413; font-family: inherit; font-size: 11px; font-weight: 600">Aprovar</button><button style="height: 30px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Recusar</button><button style="height: 30px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Mensagem</button></div>
+          </li>
+          <li style="display: flex; flex-direction: column; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #222B2A">
+            <div style="display: flex; justify-content: space-between"><span style="font-weight: 600">[Hóspede E] · Suíte Master</span><span style="font-size: 11px; color: #9AA8A6">há 40 min</span></div>
+            <span style="font-size: 11px; color: #9AA8A6">21 → 25 nov · 4 noites · R$ 2.080 · sem pagamento</span>
+            <div style="display: flex; gap: 6px"><button style="height: 30px; padding: 0 12px; border: 0; border-radius: 7px; background: #2BB673; color: #0B1413; font-family: inherit; font-size: 11px; font-weight: 600">Aprovar</button><button style="height: 30px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Recusar</button><button style="height: 30px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Mensagem</button></div>
+          </li>
+          <li style="display: flex; flex-direction: column; gap: 8px; padding: 10px 14px">
+            <div style="display: flex; justify-content: space-between"><span style="font-weight: 600">[Hóspede F] · Suíte Superior</span><span style="font-size: 11px; color: #9AA8A6">há 12 min</span></div>
+            <span style="font-size: 11px; color: #F87171; font-weight: 600">Conflito: sobrepõe bloqueio de manutenção 18 nov</span>
+            <div style="display: flex; gap: 6px"><button style="height: 30px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Sugerir outro quarto</button><button style="height: 30px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 7px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Recusar</button></div>
+          </li>
+        </ul>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
+        <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #263030"><h2 style="margin: 0; font-size: 13px; font-weight: 700">Mensagens</h2><span style="font-size: 11px; color: #9AA8A6">WhatsApp · site · e-mail</span></div>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+            <li style="display: flex; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #222B2A"><div style="width: 8px; height: 8px; border-radius: 999px; background: {{accent}}; margin-top: 6px; flex-shrink: 0"></div><div style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 600">[Hóspede A]</span><span style="font-size: 11px; color: #9AA8A6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Chegamos por volta das 20h, tudo bem?</span></div><span style="margin-left: auto; font-size: 11px; color: #8A9896">14:11</span></li>
+            <li style="display: flex; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #222B2A"><div style="width: 8px; height: 8px; border-radius: 999px; background: {{accent}}; margin-top: 6px; flex-shrink: 0"></div><div style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 600">[Hóspede G]</span><span style="font-size: 11px; color: #9AA8A6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Vocês aceitam pet de pequeno porte?</span></div><span style="margin-left: auto; font-size: 11px; color: #8A9896">13:52</span></li>
+            <li style="display: flex; gap: 10px; padding: 10px 14px"><div style="width: 8px; height: 8px; border-radius: 999px; background: #2A3433; margin-top: 6px; flex-shrink: 0"></div><div style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 600">[Hóspede C]</span><span style="font-size: 11px; color: #9AA8A6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Obrigado pela estadia!</span></div><span style="margin-left: auto; font-size: 11px; color: #8A9896">ontem</span></li>
+          </ul>
+        </div>
+
+        <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #263030"><h2 style="margin: 0; font-size: 13px; font-weight: 700">Próximos 14 dias</h2><span style="font-size: 11px; color: #9AA8A6">ocupação por dia</span></div>
+          <div style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 4px; padding: 12px 14px 6px; align-items: end; height: 70px">
+            <span style="background: {{accent}}; height: 67%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 83%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 100%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 50%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 33%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 33%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 67%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 83%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 83%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 50%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 17%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 17%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 50%; border-radius: 3px 3px 0 0"></span><span style="background: {{accent}}; height: 67%; border-radius: 3px 3px 0 0"></span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 0 14px 10px; font-size: 10px; color: #8A9896"><span>30 out</span><span>6 nov</span><span>12 nov</span></div>
+        </div>
+
+        <div style="background: #171D1C; border: 1px solid #263030; border-radius: 10px; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px">
+          <h2 style="margin: 0; font-size: 13px; font-weight: 700">Atividade</h2>
+          <span style="font-size: 11px; color: #9AA8A6">14:20 · Check-in [Hóspede B] por [Usuário]</span>
+          <span style="font-size: 11px; color: #9AA8A6">14:02 · Pix recebido R$ 168 · #HE-2026-0142</span>
+          <span style="font-size: 11px; color: #9AA8A6">13:40 · Tarifa de fim de semana aplicada a nov</span>
+          <span style="font-size: 11px; color: #9AA8A6">09:15 · Bloqueio de manutenção Suíte Superior 18 nov</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2BB7A5","options":["#2BB7A5","#7CB4FF","#F0A36B","#C9A0FF"]},"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#2BB7A5' };
+  }
+}
+</script>
+</body>
+</html>

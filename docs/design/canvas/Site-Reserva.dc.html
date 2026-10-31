@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Site público — Reserva em 3 passos (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+html{color-scheme:dark}body{margin:0;font-family:Inter,system-ui,sans-serif;color:#E8ECEB;background:#0F1413}input,textarea,select{background:#111817;color:#E8ECEB}input::placeholder,textarea::placeholder{color:#7A8886}
+a{color:#2BB7A5}a:hover{color:#5FD3C3}
+</style>
+</helmet>
+<div style="width: 390px; height: 1460px; box-sizing: border-box; background: #0F1413; display: flex; flex-direction: column; overflow: hidden; font-family: Inter, system-ui, sans-serif">
+
+  <header style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #171D1C; border-bottom: 1px solid #263030">
+    <a href="Site-Busca.dc.html" aria-label="Voltar" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8ECEB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+    </a>
+    <span style="font-size: 15px; font-weight: 700">Finalizar reserva</span>
+  </header>
+
+  <ol style="list-style: none; margin: 0; padding: 14px 16px 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+    <li style="display: flex; flex-direction: column; gap: 6px"><span style="height: 4px; border-radius: 2px; background: {{accent}}"></span><span style="font-size: 11px; font-weight: 600; color: {{accent}}">1 · Datas e quarto</span></li>
+    <li style="display: flex; flex-direction: column; gap: 6px"><span style="height: 4px; border-radius: 2px; background: {{accent}}"></span><span style="font-size: 11px; font-weight: 600; color: {{accent}}">2 · Seus dados</span></li>
+    <li style="display: flex; flex-direction: column; gap: 6px"><span style="height: 4px; border-radius: 2px; background: #2A3433"></span><span style="font-size: 11px; font-weight: 600; color: #8A9896">3 · Pagamento</span></li>
+  </ol>
+
+  <section style="margin: 14px 16px 0; background: #171D1C; border: 1px solid #263030; border-radius: 14px; padding: 12px 14px; display: flex; gap: 12px; align-items: center">
+    <div style="width: 64px; height: 64px; border-radius: 10px; background: #243030; flex-shrink: 0"></div>
+    <div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+      <span style="font-size: 14px; font-weight: 700">Suíte Padrão</span>
+      <span style="font-size: 12px; color: #9AA8A6">Sex 14 nov → Dom 16 nov · 2 noites · 2 adultos</span>
+      <span style="font-size: 12px; color: #9AA8A6">Check-in a partir das [14h] · Check-out até [12h]</span>
+    </div>
+    <a href="Site-Busca.dc.html" style="font-size: 12px; font-weight: 600">Alterar</a>
+  </section>
+
+  <section style="margin: 14px 16px 0; background: #171D1C; border: 1px solid #263030; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+    <h2 style="margin: 0; font-size: 15px; font-weight: 700">Dados do hóspede</h2>
+    <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Nome completo
+      <input type="text" placeholder="Como no documento" style="height: 44px; border: 1px solid #2A3433; border-radius: 10px; padding: 0 12px; font-size: 14px; font-family: inherit">
+    </label>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">WhatsApp
+        <input type="tel" placeholder="(00) 00000-0000" style="height: 44px; border: 1px solid #2A3433; border-radius: 10px; padding: 0 12px; font-size: 14px; font-family: inherit">
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">CPF (opcional)
+        <input type="text" placeholder="000.000.000-00" style="height: 44px; border: 1px solid #2A3433; border-radius: 10px; padding: 0 12px; font-size: 14px; font-family: inherit">
+      </label>
+    </div>
+    <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">E-mail
+      <input type="email" placeholder="para receber a confirmação" style="height: 44px; border: 1px solid #2A3433; border-radius: 10px; padding: 0 12px; font-size: 14px; font-family: inherit">
+    </label>
+    <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Horário previsto de chegada
+      <input type="text" value="Entre 14h e 18h" style="height: 44px; border: 1px solid #2A3433; border-radius: 10px; padding: 0 12px; font-size: 14px; font-family: inherit">
+    </label>
+    <label style="display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 600; color: #9AA8A6">Pedido especial (opcional)
+      <textarea rows="2" placeholder="Berço, andar alto, chegada tardia..." style="border: 1px solid #2A3433; border-radius: 10px; padding: 10px 12px; font-size: 14px; font-family: inherit; resize: none"></textarea>
+    </label>
+  </section>
+
+  <section style="margin: 14px 16px 0; background: #171D1C; border: 1px solid #263030; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+    <h2 style="margin: 0; font-size: 15px; font-weight: 700">Adicionais</h2>
+    <label style="display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px">
+      <span style="display: flex; align-items: center; gap: 10px"><input type="checkbox" checked style="width: 20px; height: 20px">Café da manhã (2 pessoas)</span>
+      <span style="font-weight: 600">+ R$ 60</span>
+    </label>
+    <label style="display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px">
+      <span style="display: flex; align-items: center; gap: 10px"><input type="checkbox" style="width: 20px; height: 20px">Early check-in (11h)</span>
+      <span style="font-weight: 600">+ R$ 80</span>
+    </label>
+    <label style="display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px">
+      <span style="display: flex; align-items: center; gap: 10px"><input type="checkbox" style="width: 20px; height: 20px">Vaga de garagem</span>
+      <span style="font-weight: 600">Incluso</span>
+    </label>
+  </section>
+
+  <section style="margin: 14px 16px 0; background: #171D1C; border: 1px solid #263030; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px">
+    <h2 style="margin: 0; font-size: 15px; font-weight: 700">Resumo</h2>
+    <div style="display: flex; justify-content: space-between; font-size: 13px"><span>2 noites × R$ 250</span><span>R$ 500</span></div>
+    <div style="display: flex; justify-content: space-between; font-size: 13px"><span>Café da manhã</span><span>R$ 60</span></div>
+    <div style="display: flex; justify-content: space-between; font-size: 13px; color: #9AA8A6"><span>Taxas e impostos</span><span>inclusos</span></div>
+    <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; border-top: 1px solid #263030; padding-top: 8px"><span>Total</span><span>R$ 560</span></div>
+    <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px">
+      <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 2px solid {{accent}}; border-radius: 10px; font-size: 13px">
+        <input type="radio" name="pag" checked style="width: 18px; height: 18px">
+        <span style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 600">Sinal de 30% agora via Pix</span><span style="font-size: 11px; color: #9AA8A6">R$ 168 hoje · restante no check-in</span></span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #2A3433; border-radius: 10px; font-size: 13px">
+        <input type="radio" name="pag" style="width: 18px; height: 18px">
+        <span style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 600">Pagar tudo no cartão</span><span style="font-size: 11px; color: #9AA8A6">até 3× sem juros</span></span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #2A3433; border-radius: 10px; font-size: 13px">
+        <input type="radio" name="pag" style="width: 18px; height: 18px">
+        <span style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 600">Solicitar reserva sem pagamento</span><span style="font-size: 11px; color: #9AA8A6">o hotel confirma em até [24h]</span></span>
+      </label>
+    </div>
+  </section>
+
+  <section style="margin: 14px 16px 0; display: flex; flex-direction: column; gap: 8px">
+    <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 12px; color: #C7D0CE; line-height: 1.45">
+      <input type="checkbox" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px">
+      <span>Li a <a href="#politica">política de cancelamento</a> (grátis até [X] dias antes; depois, [Y]% da primeira noite) e autorizo o uso dos meus dados para esta reserva.</span>
+    </label>
+  </section>
+
+  <div style="margin-top: auto; padding: 12px 16px 16px; background: #171D1C; border-top: 1px solid #263030; display: flex; flex-direction: column; gap: 8px">
+    <a href="Site-MinhaReserva.dc.html" style="height: 50px; border-radius: 10px; background: {{accent}}; color: #0B1413; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; text-decoration: none">Confirmar e pagar R$ 168</a>
+    <span style="font-size: 11px; color: #9AA8A6; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px">
+      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA8A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      Pagamento processado por [gateway]; o hotel não armazena dados do cartão.
+    </span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2BB7A5","options":["#2BB7A5","#7CB4FF","#F0A36B","#C9A0FF"]},"$preview":{"width":390,"height":1460}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#2BB7A5' };
+  }
+}
+</script>
+</body>
+</html>

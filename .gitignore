@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+.env
+.env.*
+!.env.example
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+# Claude Code (ajustes pessoais)
+.claude/settings.local.json
+.claude/settings.local.json.off
+
+
+# Termos locais do varrer-acoplamento (um por linha; nunca versionar)
+.claude/acoplamento-termos.local

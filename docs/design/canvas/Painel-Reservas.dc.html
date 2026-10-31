@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Painel — Reservas e detalhe</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+html{color-scheme:dark}body{margin:0;font-family:Inter,system-ui,sans-serif;color:#E8ECEB;background:#0F1413}input,textarea,select{background:#111817;color:#E8ECEB}input::placeholder,textarea::placeholder{color:#7A8886}
+a{color:#2BB7A5}a:hover{color:#5FD3C3}
+</style>
+</helmet>
+<div style="min-height: 920px; box-sizing: border-box; display: flex; flex-wrap: wrap; background: #0F1413; font-family: Inter, system-ui, sans-serif; font-size: 13px">
+
+  <nav aria-label="Menu principal" style="width: 220px; flex: 0 0 220px; background: #0B0F0E; color: #CBD5D3; display: flex; flex-direction: column; padding: 14px 12px; gap: 4px; box-sizing: border-box">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 8px 14px">
+      <div style="width: 28px; height: 28px; border-radius: 7px; background: {{accent}}"></div>
+      <div style="display: flex; flex-direction: column"><span style="font-weight: 700; color: #FFFFFF; font-size: 13px">Hotel Engine</span><span style="font-size: 11px; color: #8A9896">Painel do anfitrião</span></div>
+    </div>
+    <button style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border: 1px solid #1F2A29; border-radius: 8px; background: #151D1C; color: #FFFFFF; font-family: inherit; font-size: 12px; font-weight: 600; margin-bottom: 10px"><span>[NOME DO HOTEL]</span><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A9896" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg></button>
+    <a href="Painel-Hoje.dc.html" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Hoje</a>
+    <a href="Painel-Calendario.dc.html" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Calendário</a>
+    <a href="Painel-Reservas.dc.html" style="display: flex; justify-content: space-between; padding: 9px 10px; border-radius: 8px; background: #1F2A29; color: #FFFFFF; text-decoration: none; font-weight: 600"><span>Reservas</span><span style="font-size: 11px; font-weight: 700; background: #E0A030; color: #0B1413; border-radius: 999px; padding: 1px 7px">3</span></a>
+    <a href="#inbox" style="display: flex; justify-content: space-between; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none"><span>Mensagens</span><span style="font-size: 11px; font-weight: 700; background: #1F2A29; color: #FFFFFF; border-radius: 999px; padding: 1px 7px">5</span></a>
+    <a href="#hospedes" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Hóspedes</a>
+    <a href="#quartos" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Quartos e tarifas</a>
+    <a href="#relatorios" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Relatórios</a>
+    <a href="Painel-Config.dc.html" style="display: flex; padding: 9px 10px; border-radius: 8px; color: #CBD5D3; text-decoration: none">Configurações</a>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 20px; background: #171D1C; border-bottom: 1px solid #263030">
+      <h1 style="margin: 0; font-size: 18px; font-weight: 700">Reservas</h1>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <button style="height: 34px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 12px; font-weight: 600">Exportar CSV</button>
+        <button style="height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: {{accent}}; color: #0B1413; font-family: inherit; font-size: 12px; font-weight: 600">+ Nova reserva</button>
+      </div>
+    </header>
+
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding: 12px 20px 0">
+      <div style="display: flex; border: 1px solid #2A3433; border-radius: 8px; overflow: hidden; font-size: 12px">
+        <button style="height: 32px; padding: 0 10px; border: 0; background: {{accent}}; color: #0B1413; font-family: inherit; font-weight: 600">Todas · 48</button>
+        <button style="height: 32px; padding: 0 10px; border: 0; background: #171D1C; font-family: inherit; font-weight: 600; color: #F5A524">Pendentes · 3</button>
+        <button style="height: 32px; padding: 0 10px; border: 0; background: #171D1C; font-family: inherit; font-weight: 600">Confirmadas · 31</button>
+        <button style="height: 32px; padding: 0 10px; border: 0; background: #171D1C; font-family: inherit; font-weight: 600">Hospedadas · 4</button>
+        <button style="height: 32px; padding: 0 10px; border: 0; background: #171D1C; font-family: inherit; font-weight: 600">Canceladas · 10</button>
+      </div>
+      <label style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-size: 12px">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA8A6" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Nome, código, telefone" style="border: 0; outline: 0; font-family: inherit; font-size: 12px; width: 180px">
+      </label>
+      <button style="height: 32px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 12px; font-weight: 600">Período: próximos 30 dias</button>
+      <button style="height: 32px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 12px; font-weight: 600">Quarto: todos</button>
+      <button style="height: 32px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 12px; font-weight: 600">Pagamento: todos</button>
+    </div>
+
+    <div style="display: flex; gap: 12px; padding: 12px 20px 20px; align-items: flex-start; flex-wrap: wrap">
+
+      <section aria-label="Lista de reservas" style="flex: 1 1 560px; min-width: 0; background: #171D1C; border: 1px solid #263030; border-radius: 10px; overflow-x: auto">
+        <table style="width: 100%; min-width: 700px; border-collapse: collapse; font-size: 12px">
+          <thead>
+            <tr style="background: #1B2221; color: #9AA8A6; text-align: left">
+              <th style="padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #263030"><input type="checkbox" aria-label="Selecionar todas"></th>
+              <th style="padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #263030">Código</th>
+              <th style="padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #263030">Hóspede</th>
+              <th style="padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #263030">Quarto</th>
+              <th style="padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #263030">Check-in → out</th>
+              <th style="padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #263030">Status</th>
+              <th style="padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #263030">Pagamento</th>
+              <th style="padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #263030; text-align: right">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: rgba(43,183,165,0.14)">
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><input type="checkbox" aria-label="Selecionar"></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; font-weight: 600">HE-0142</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><div style="display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede D]</span><span style="font-size: 11px; color: #9AA8A6">site · 2 adultos</span></div></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">101 · Padrão</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">14 nov → 16 nov · 2n</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: rgba(245,165,36,0.15); color: #F5A524">Pendente</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; color: #3DD68C; font-weight: 600">Sinal pago · R$ 168</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; text-align: right; font-weight: 600">R$ 560</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><input type="checkbox" aria-label="Selecionar"></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; font-weight: 600">HE-0143</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><div style="display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede E]</span><span style="font-size: 11px; color: #9AA8A6">site · 4 adultos</span></div></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">301 · Master</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">21 nov → 25 nov · 4n</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: rgba(245,165,36,0.15); color: #F5A524">Pendente</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; color: #9AA8A6">Sem pagamento</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; text-align: right; font-weight: 600">R$ 2.080</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><input type="checkbox" aria-label="Selecionar"></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; font-weight: 600">HE-0141</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><div style="display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede A]</span><span style="font-size: 11px; color: #9AA8A6">WhatsApp · 2 adultos</span></div></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">201 · Superior</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">30 out → 1 nov · 2n</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: rgba(61,214,140,0.15); color: #3DD68C">Confirmada</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; color: #3DD68C; font-weight: 600">Pago · cartão</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; text-align: right; font-weight: 600">R$ 760</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><input type="checkbox" aria-label="Selecionar"></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; font-weight: 600">HE-0139</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><div style="display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede B]</span><span style="font-size: 11px; color: #9AA8A6">site · 2 adultos</span></div></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">102 · Padrão</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">30 out → 2 nov · 3n</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: rgba(124,180,255,0.15); color: #7CB4FF">Hospedado</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; color: #F5A524; font-weight: 600">Saldo R$ 300 no check-out</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; text-align: right; font-weight: 600">R$ 750</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><input type="checkbox" aria-label="Selecionar"></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; font-weight: 600">HE-0137</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><div style="display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede Q]</span><span style="font-size: 11px; color: #9AA8A6">site · 2 adultos</span></div></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">201 · Superior</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A">8 nov → 10 nov · 2n</td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: #242D2C; color: #9AA8A6">Cancelada</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A"><span style="font-size: 11px; color: #9AA8A6">Reembolsado R$ 228</span></td>
+              <td style="padding: 10px 12px; border-bottom: 1px solid #222B2A; text-align: right; font-weight: 600; color: #8A9896">R$ 760</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 12px"><input type="checkbox" aria-label="Selecionar"></td>
+              <td style="padding: 10px 12px; font-weight: 600">HE-0136</td>
+              <td style="padding: 10px 12px"><div style="display: flex; flex-direction: column"><span style="font-weight: 600">[Hóspede J]</span><span style="font-size: 11px; color: #9AA8A6">site · 2 adultos</span></div></td>
+              <td style="padding: 10px 12px">102 · Padrão</td>
+              <td style="padding: 10px 12px">5 nov → 9 nov · 4n</td>
+              <td style="padding: 10px 12px"><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: rgba(61,214,140,0.15); color: #3DD68C">Confirmada</span></td>
+              <td style="padding: 10px 12px"><span style="font-size: 11px; color: #3DD68C; font-weight: 600">Pago · Pix</span></td>
+              <td style="padding: 10px 12px; text-align: right; font-weight: 600">R$ 1.000</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-top: 1px solid #263030; font-size: 11px; color: #9AA8A6">
+          <span>6 de 48 · 25 por página</span>
+          <div style="display: flex; gap: 4px"><button style="height: 28px; padding: 0 8px; border: 1px solid #2A3433; border-radius: 6px; background: #171D1C; font-family: inherit; font-size: 11px">Anterior</button><button style="height: 28px; padding: 0 8px; border: 1px solid #2A3433; border-radius: 6px; background: #171D1C; font-family: inherit; font-size: 11px">Próxima</button></div>
+        </div>
+      </section>
+
+      <aside aria-label="Detalhe da reserva" style="flex: 0 1 380px; min-width: 300px; background: #171D1C; border: 1px solid #263030; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden">
+        <div style="padding: 12px 14px; border-bottom: 1px solid #263030; display: flex; justify-content: space-between; align-items: flex-start">
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 11px; color: #9AA8A6">HE-0142 · criada 30 out, 12:10 · site</span>
+            <span style="font-size: 15px; font-weight: 700">[Hóspede D]</span>
+            <span style="font-size: 12px; color: #9AA8A6">[telefone] · [e-mail]</span>
+          </div>
+          <span style="font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 999px; background: rgba(245,165,36,0.15); color: #F5A524">Pendente</span>
+        </div>
+
+        <div style="padding: 12px 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; font-size: 12px; border-bottom: 1px solid #263030">
+          <div style="display: flex; flex-direction: column"><span style="color: #9AA8A6">Quarto</span><span style="font-weight: 600">101 · Suíte Padrão</span></div>
+          <div style="display: flex; flex-direction: column"><span style="color: #9AA8A6">Hóspedes</span><span style="font-weight: 600">2 adultos</span></div>
+          <div style="display: flex; flex-direction: column"><span style="color: #9AA8A6">Check-in</span><span style="font-weight: 600">Sex 14 nov · 14h</span></div>
+          <div style="display: flex; flex-direction: column"><span style="color: #9AA8A6">Check-out</span><span style="font-weight: 600">Dom 16 nov · 12h</span></div>
+          <div style="display: flex; flex-direction: column"><span style="color: #9AA8A6">Chegada prevista</span><span style="font-weight: 600">entre 14h e 18h</span></div>
+          <div style="display: flex; flex-direction: column"><span style="color: #9AA8A6">Pedido especial</span><span style="font-weight: 600">andar alto</span></div>
+        </div>
+
+        <div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; border-bottom: 1px solid #263030">
+          <div style="display: flex; justify-content: space-between"><span>2 noites × R$ 250</span><span>R$ 500</span></div>
+          <div style="display: flex; justify-content: space-between"><span>Café da manhã</span><span>R$ 60</span></div>
+          <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid #263030; padding-top: 6px"><span>Total</span><span>R$ 560</span></div>
+          <div style="display: flex; justify-content: space-between; color: #3DD68C; font-weight: 600"><span>Pix recebido 30 out 14:02</span><span>R$ 168</span></div>
+          <div style="display: flex; justify-content: space-between; color: #F5A524; font-weight: 600"><span>A receber no check-in</span><span>R$ 392</span></div>
+        </div>
+
+        <div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid #263030">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap">
+            <button style="height: 34px; padding: 0 14px; border: 0; border-radius: 8px; background: #2BB673; color: #0B1413; font-family: inherit; font-size: 12px; font-weight: 700">Aprovar reserva</button>
+            <button style="height: 34px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 12px; font-weight: 600">Recusar</button>
+            <button style="height: 34px; padding: 0 12px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 12px; font-weight: 600">Mover de quarto</button>
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap">
+            <button style="height: 30px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Enviar link de pagamento</button>
+            <button style="height: 30px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">Reenviar confirmação</button>
+            <button style="height: 30px; padding: 0 10px; border: 1px solid #2A3433; border-radius: 8px; background: #171D1C; font-family: inherit; font-size: 11px; font-weight: 600">WhatsApp</button>
+          </div>
+          <span style="font-size: 11px; color: #9AA8A6">Aprovar grava status com guarda de estado (só se ainda pendente). Disponibilidade revalidada no servidor.</span>
+        </div>
+
+        <div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; font-size: 12px">
+          <h2 style="margin: 0; font-size: 12px; font-weight: 700; color: #9AA8A6">Linha do tempo</h2>
+          <div style="display: flex; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 999px; background: #2BB673; margin-top: 5px; flex-shrink: 0"></span><span>14:02 · Pix de R$ 168 confirmado pelo gateway</span></div>
+          <div style="display: flex; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 999px; background: #4E5C5A; margin-top: 5px; flex-shrink: 0"></span><span>12:11 · E-mail "pedido recebido" enviado</span></div>
+          <div style="display: flex; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 999px; background: #4E5C5A; margin-top: 5px; flex-shrink: 0"></span><span>12:10 · Pedido criado pelo site · IP mascarado</span></div>
+          <label style="display: flex; flex-direction: column; gap: 4px; margin-top: 4px; font-size: 11px; color: #9AA8A6; font-weight: 600">Nota interna (não visível ao hóspede)
+            <textarea rows="2" placeholder="Ex.: prefere quarto longe da rua" style="border: 1px solid #2A3433; border-radius: 8px; padding: 8px; font-family: inherit; font-size: 12px; resize: none"></textarea>
+          </label>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#2BB7A5","options":["#2BB7A5","#7CB4FF","#F0A36B","#C9A0FF"]},"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#2BB7A5' };
+  }
+}
+</script>
+</body>
+</html>
