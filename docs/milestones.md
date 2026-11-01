@@ -3,21 +3,39 @@
 Fonte da verdade do PROGRESSO. `docs/produto-e-roadmap.md` diz o que e por que; este arquivo diz onde estamos, o que o agente pode pegar agora e o que espera o humano.
 Toda sessao do Claude Code comeca lendo "Estado atual" e "Fila do humano", e termina atualizando-os.
 
-## Protocolo (versao 2, 2026-10-31: flexivel por padrao, rigido onde ha risco)
+## Protocolo (versao 3, 2026-11-01: trabalho por entregas)
 
-**O que e rigido (nao muda sem decisao registrada no CLAUDE.md):**
-- GATE (coluna Gate com D-algo aberto) e tarefa marcada `humano` so o humano marca. O agente para, escreve o que precisa, e segue para outra tarefa liberada em vez de esperar.
-- Aplicar migracao, push para `develop`/`main`, merge de PR, deploy, instalar dependencia e qualquer escrita em Supabase/Vercel sao do humano. O agente prepara ate o ponto imediatamente anterior. Push de branch de trabalho (`git push [-u] origin <branch>`) e `gh pr create` (base `develop`) sao do agente (M0-16).
-- Rota, SQL, RLS, service role ou hook: `revisor` antes do commit, sem excecao. Tarefa assim sem veredito fica `[~]`, nunca `[x]`.
-- Um objetivo por commit. Uma sessao pode encadear varios commits (ver "lote"), mas cada commit tem um objetivo e, quando couber, o veredito do revisor no corpo.
+**Hierarquia:** Projeto > Milestone > **Entrega** > Tarefa. A branch e a unidade de desenvolvimento, o PR e a unidade de revisao e o handoff e a unidade de comunicacao; juntos representam a Entrega. As tabelas de tarefas abaixo continuam como checklist; as entregas ficam na secao "Entregas".
 
-**O que e flexivel:**
-- **Ordem.** A ordem das linhas e preferencia, nao lei. O agente pode pegar qualquer tarefa `[ ]` cujas dependencias DURAS (marcadas com `!`) estejam `[x]` e cujo gate esteja fechado; dependencias sem `!` sao sugestao de ordem e podem ser puladas com uma nota. Ao escolher fora da ordem, o agente diz por que no relato.
-- **Lote.** Tarefas adjacentes, na mesma branch, sem gate e sem migracao entre elas, podem ser feitas na mesma sessao (ex.: M0-08 + M0-09; M1-03 + M1-04). O lote e declarado no inicio do relato.
-- **Milestones em paralelo.** Trabalhar no M1 com o M0 aberto e permitido quando houver autorizacao em pe (secao "Autorizacoes em pe"). O criterio de saida de cada milestone continua valendo para fecha-lo.
-- **Tarefas humanas nao bloqueiam o agente.** Tudo que depende do humano vai para "Fila do humano"; o agente segue com o que esta liberado.
-- **Tamanho.** O agente pode dividir uma linha em sub-tarefas (M1-06a, M1-06b) ou fundir duas, desde que atualize a tabela e o criterio de pronto continue verificavel.
-- **Descobertas.** Tarefa nova encontrada no caminho entra como linha com nota "descoberta em <tarefa>". Se for pequena (< 15 min), sem gate, sem migracao e na mesma area, pode ser feita no mesmo lote; senao, fica para depois.
+**Tamanho.** Uma entrega deve ser grande o bastante para representar progresso funcional significativo e pequena o bastante para ser revisada, testada e revertida com seguranca.
+
+**Relacao.** Nao agrupar tarefas apenas para reduzir PRs. As tarefas de uma entrega precisam ter relacao funcional, tecnica ou de objetivo, o mesmo risco e o mesmo criterio de aceite. Migracao, upgrade de framework e hook/settings sao sempre entrega propria.
+
+**Limites.** Ate 4 tarefas, cerca de 400 linhas de codigo alteradas (fora docs) e 3 dias de branch. Ao prever estourar qualquer um, dividir antes de comecar. Sinais para dividir: objetivos ou riscos diferentes; aceites em momentos diferentes; refatoracao misturada com feature; "aproveitar para" tocar algo adjacente. O agente lista os sinais (presentes ou ausentes) no plano da entrega. O agente nunca amplia uma entrega em andamento: descoberta vira linha nova na tabela do milestone, com nota "descoberta em <tarefa>".
+
+**Commits.** Pequenos, com um objetivo cada, independentes da frequencia de entregas. Commit nao gera doc, milestone nem build.
+
+**Fluxo da entrega:** planejar (tarefas cobertas, relacao entre elas, criterio de aceite unico, sinais de divisao, validacoes da matriz) -> implementar o conjunto -> validar -> documentar (handoff e `docs/milestones.md`, uma vez) -> proxima entrega. Push ao fechar a entrega, ou antes para preview se o humano pedir.
+
+**Validacoes por tipo de mudanca.** O agente escolhe as aplicaveis no plano da entrega e as lista no handoff, com o resultado de cada uma:
+
+| Tipo | Validacoes |
+|---|---|
+| Frontend/UI | typecheck, lint, build, responsividade (390 e 1440 px), `prefers-reduced-motion`; Playwright quando existir |
+| API/rotas | zod, tratamento de erros, codigos HTTP, teste manual dos cenarios, `revisor` |
+| Supabase | migracao com down, RLS/policies, queries, `types/database.ts`, `revisor` e `tenant-auditor` (a partir do M2), aplicacao pelo humano no dev |
+| Hooks/settings | `test-hooks`, `revisor` |
+| Docs | grep de termos proibidos, links |
+
+O `revisor` e obrigatorio quando a entrega toca rota, SQL, RLS, service role, hook ou settings; nas demais, o agente decide e justifica no handoff. Entrega dessas classes sem veredito fica `[~]`, nunca `[x]`.
+
+**Reversao.** Uma entrega e valida so se um unico `git revert` do merge commit desfaz tudo sem quebrar build nem banco; por isso migracao e seus consumidores sao entregas separadas. O handoff traz "Plano de rollback" e a tabela commit -> tarefa -> validacao. Branch viva recebe `git merge origin/develop` diariamente. Preview intermediario e permitido em UI.
+
+**Rigido (inalterado, nao muda sem decisao registrada no CLAUDE.md):**
+- GATE (coluna Gate com D-algo aberto) e tarefa marcada `humano` so o humano marca. O agente para, escreve o que precisa, e segue para outra entrega liberada em vez de esperar.
+- Merge de PR, push em `develop`/`main`, migracao, deploy, dependencia nova e qualquer escrita em Supabase/Vercel sao do humano. O agente prepara ate o ponto imediatamente anterior. Push de branch de trabalho (`git push [-u] origin <branch>`) e `gh pr create` (base `develop`) sao do agente (M0-16).
+
+**Ordem e paralelismo.** A ordem das linhas e preferencia. O agente pode pegar qualquer tarefa `[ ]` cujas dependencias DURAS (`!`) estejam `[x]` e cujo gate esteja fechado; dependencias sem `!` podem ser puladas com uma nota, e a escolha fora da ordem e justificada no plano. Trabalhar em milestones em paralelo e permitido com autorizacao em pe (secao "Autorizacoes em pe"). Tarefas humanas nao bloqueiam o agente: vao para a "Fila do humano".
 
 **Status:** `[ ]` aberta · `[~]` em andamento ou aguardando revisor · `[h]` entregue pelo agente, aguardando verificacao do humano · `[x]` concluida e aceita · `[!]` bloqueada (motivo na Nota) · `[-]` descartada (motivo na Nota).
 
@@ -33,24 +51,35 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 
 | Campo | Valor |
 |---|---|
-| Ultima atualizacao | 2026-11-01 (agente: M4-02 em `feat/m4-02-busca-disponibilidade`, aguardando verificacao do humano) |
+| Ultima atualizacao | 2026-11-01 (agente: Protocolo v3 por entregas em `docs/protocolo-v3`; M4-02 em PR #9 aguardando verificacao do humano) |
 | Milestones ativos | M0 (fechando) e M1 (em andamento, autorizado) |
 | Branch de trabalho | `develop` (integracao; branches de trabalho saem dela) |
 | Modelo em uso | Sonnet (padrao) / Fable |
-| Lote sugerido para o agente | M4-06, depois M2-01 (M4-02 entregue em `[h]`; M0-11 depende de aprovacao humana de dependencia) |
+| Entrega sugerida para o agente | E4-A "Reservas v1" (M4-06, M4-08, M1-12; M4-02 ja em PR #9); em seguida E2-A (documento). E0-B aguarda autorizacao de dependencias |
 | Bloqueios | nenhum de agente. Ressalvas medias do revisor movidas para M2-09 |
 
 ## Fila do humano (o que so voce destrava)
 
 | Prioridade | Item | Libera |
 |---|---|---|
-| 0 | Testar M4-02 em localhost/preview: escolher datas, conferir total e estados, clicar Reservar e ver o dialogo com as datas; comparar com a prancha Site-Busca (exportar o PNG para `docs/design/exports/03-e4-reserva/` se quiser) (passos em `docs/handoffs/2026-11-01-m4-02-busca.md`) | M4-02 |
+| 0 | Entrega E4-A: testar M4-02 em localhost/preview: escolher datas, conferir total e estados, clicar Reservar e ver o dialogo com as datas; comparar com a prancha Site-Busca (exportar o PNG para `docs/design/exports/03-e4-reserva/` se quiser) (passos em `docs/handoffs/2026-11-01-m4-02-busca.md`) | M4-02 |
 | 1 | Testar M1-11 no preview: reserva sintetica de nome `José & Ana #2`; aprovar, cancelar com motivo `100%` e rejeitar; conferir o texto no WhatsApp (passos em `docs/handoffs/2026-11-01-m1-11-whatsapp.md`) | M1-11 |
 | 2 | Rodar `evals/sessao-zero.md` em sessao nova com Sonnet (veredito) e registrar | M0-07 |
 | 3 | Preencher `docs/runbook.md` §1 e §4 a §6 (prod, rollback, incidente, observabilidade) | M6-02 |
 | 4 | Criar o projeto novo `hotel-engine` na Vercel so com Preview (sem Production) e renomear repo e projeto prod (M0-14) | M0-14, M6-04 |
 | 5 | Decidir o destino de Momentos/galeria (generica por tenant ou remover) e registrar em `CLAUDE.md > Decisoes` | M1-10 |
 | 6 | Conferir o `.hermes.md` ajustado (linha 11: push de branch de trabalho e PR permitidos ao delegar ao Claude Code) | higiene |
+| 7 | Entrega E0-B: autorizar a atualizacao de dependencias (Next 15/React 19 e zod 4) em PR proprio | E0-B (M0-11, M0-12) |
+
+## Entregas
+
+Cada entrega e uma branch + um PR + um handoff (Protocolo v3). As tarefas seguem na tabela do milestone; aqui fica o agrupamento. Entrega so e criada com tarefas relacionadas, mesmo risco e mesmo criterio de aceite, dentro dos limites do protocolo.
+
+| ID | Entrega | Tarefas | Tipo de mudanca (matriz) | Estado | Nota |
+|---|---|---|---|---|---|
+| E4-A | Reservas v1 | M4-02 (PR #9), M4-06, M4-08, M1-12 | UI + API/rotas; `revisor` obrigatorio (rota e `public/sw.js`) | em andamento: M4-02 em PR, aguardando verificacao do humano | ao planejar, conferir os limites (4 tarefas, ~400 linhas fora docs, 3 dias) e os sinais de divisao; M1-12 mexe no service worker e pode virar entrega propria se o plano apontar riscos diferentes |
+| E0-B | Upgrade Next 15 | M0-11, M0-12 | dependencias; entrega propria | aguardando autorizacao do humano (fila, item 7) | zod 4 em PR separado se o plano indicar risco diferente (CLAUDE.md: upgrades grandes ficam separados de mudanca funcional) |
+| E2-A | Plano multi-tenant | M2-01 | Docs (documento) | aberta | pode comecar com M1 em `[h]`; gate D2 ja fechado |
 
 ## Autorizacoes em pe
 
@@ -198,9 +227,4 @@ Criterio de saida: deploy pelo humano via /deploy-checklist; /smoke-test contra 
 
 ## Como iniciar a proxima sessao
 
-Rode `/proxima`. Texto de referencia (`.claude/commands/proxima.md`):
-
-```
-Leia docs/milestones.md ("Estado atual", "Fila do humano", "Autorizacoes em pe" e as tabelas dos milestones ativos), depois docs/harness.md (Resumo em 12 linhas).Monte o LOTE da sessao: uma ou mais tarefas [ ] com dependencias duras (!) em [x], gate fechado, mesma branch, sem migracao entre elas. Se preferir uma ordem diferente da tabela, diga por que. Se a unica opcao for GATE ou tarefa do humano, liste o que precisa dele e pare.
-Escreva o prompt do lote nos sete blocos (docs/produto-e-roadmap.md, secao 4), com Contexto obrigatorio apontando para as pranchas em docs/design/exports/ quando houver, e me mostre ANTES de executar. Apos minha confirmacao: execute, um commit por objetivo, revisor onde o protocolo exige, atualize milestones.md (status, fila do humano, estado atual) e entregue o relato.
-```
+Rode `/proxima`. O comando (`.claude/commands/proxima.md`) le este arquivo e o harness e propoe a proxima ENTREGA: tarefas cobertas e relacao entre elas, criterio de aceite unico, sinais de divisao e limites, validacoes da matriz, pontos de parada e o prompt nos sete blocos. Nada e executado antes da confirmacao do humano. Ao final da entrega: validacoes, push, PR, um handoff e este arquivo atualizado uma vez.

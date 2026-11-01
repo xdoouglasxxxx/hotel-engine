@@ -106,13 +106,15 @@ Inegociaveis:
   inventariado em `docs/analysis/03-acoplamento-ao-cliente-atual.md`.
 
 Forma de trabalho:
-- Planejar antes de implementar (Plan mode). Um objetivo por sessao e por PR.
+- Planejar antes de implementar (Plan mode). Um objetivo por entrega e por PR; uma entrega pode ter
+  varias sessoes. Commits nao geram docs. Validacoes por tipo de mudanca: matriz em
+  `docs/milestones.md` (Protocolo v3).
 - Upgrades grandes de framework ficam separados de qualquer mudanca funcional.
 - Commits pequenos (`feat:`, `fix:`, `chore:`, `docs:`, `db:`). Nunca push em main/develop, force ou reset --hard.
 - Mudancas de banco sempre via `/nova-migracao`, revisadas por mim. Os `supabase/*.sql`
   atuais sao snapshot historico: nao editar.
-- Antes de commitar mudanca em rotas, acesso a dados, middleware ou SQL: agente `revisor`.
-  Na fase multi-tenant: tambem `tenant-auditor`.
+- Por entrega que toque rotas, acesso a dados, middleware, SQL, RLS, service role, hook ou settings:
+  agente `revisor` antes do push. Na fase multi-tenant: tambem `tenant-auditor`.
 - Nao presumir: marcar [INCERTO] ou [INFERIDO]. Relatar sempre o que NAO foi verificado.
 - Regras detalhadas por area em `.claude/rules/` (carregadas por caminho). Skills de fluxo
   em `.claude/skills/`. Tudo explicado em `docs/claude-code/README.md`.
