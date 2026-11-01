@@ -10,9 +10,11 @@ O banco impede overbooking por constraint.
 comercializavel para varios hoteis. Sou o proprietario do codigo. O banco original foi
 perdido; o dev foi recriado em 2026-10-29 (ver §9).
 
-**Estado (2026-10-30)**: fase de reanimacao. Ambiente de desenvolvimento e projeto Supabase dev:
-ver §9 (dev validado em 2026-10-29). Ainda sem testes e sem CI. Ainda NAO
-estamos fazendo multi-tenancy. Diagnostico completo em `docs/analysis/` — leia
+**Estado (2026-11-01)**: fundacao (harness, hooks, ambiente dev, fontes locais, push e PR pelo agente)
+concluida; M1 (configuracao do hotel por tenant) aceito; M4-02 (busca de disponibilidade) mergeado na
+`develop`. Ainda sem testes automatizados; CI (typecheck, lint, test-hooks) em preparo no M0-18.
+Ambiente de desenvolvimento e projeto Supabase dev: ver §9. Ainda NAO estamos fazendo multi-tenancy
+(M2). Progresso e proxima entrega: `docs/milestones.md`. Diagnostico completo em `docs/analysis/` — leia
 `00-perguntas-em-aberto.md` antes de propor arquitetura; `01-diagnostico-execucao.md` §8 e
 o plano de reanimacao.
 
@@ -26,10 +28,10 @@ Authentication:  Supabase Auth e-mail/senha via @supabase/ssr 0.5 (cookies) + ta
 Storage/Realtime: Supabase Storage (bucket "rooms"), Supabase Realtime (tabela bookings)
 Infrastructure:  nenhuma (sem Docker, compose, IaC)
 Testing:         nenhum framework; 0 testes
-CI/CD:           nenhum
-Hosting:         previsto Vercel + Supabase cloud (README); nenhum ambiente ativo
-External:        WhatsApp via links wa.me (sem API), Google Fonts (build), Google Maps iframe
-Package manager: npm, SEM lockfile. Node >= 18.17 (local: Node 26 — [INCERTO] compat. Next 14)
+CI/CD:           nenhum ativo; GitHub Actions (typecheck, lint, test-hooks) em preparo no M0-18; deploy so pela Vercel (previews)
+Hosting:         previews na Vercel (por branch e por PR) + Supabase dev na nuvem; producao vazia ate o M6-01
+External:        WhatsApp via links wa.me (sem API), Google Maps iframe; fontes locais (next/font/local, sem Google Fonts)
+Package manager: npm, com package-lock.json versionado. Node >= 18.17 em `engines` hoje (local: Node 26 — [INCERTO] compat. Next 14); Node 22 LTS entra em `engines` quando o upgrade de dependencias (M0-11) autorizar
 ```
 `lucide-react` esta em `package.json` mas nao e usado.
 
@@ -58,7 +60,7 @@ Postgres; preco nunca vem do cliente; nenhuma policy de insert publico em `booki
 pendentes nao bloqueiam datas. Detalhes e diagramas: `docs/analysis/02-arquitetura.md`.
 
 ## 4. Desenvolvimento (dev operacional desde 2026-10-29)
-- Instalar: `npm install` (gera lockfile; pede confirmacao). Instalar ou atualizar dependencia so
+- Instalar: `npm ci` (instala do `package-lock.json` versionado; `npm install` pede confirmacao). Instalar ou atualizar dependencia so
   com aprovacao explicita do humano, em PR proprio (harness, eixo 4). Para o Hermes a proibicao e
   absoluta (`.hermes.md`).
 - Configurar: `.env.local` com `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
@@ -66,15 +68,16 @@ pendentes nao bloqueiam datas. Detalhes e diagramas: `docs/analysis/02-arquitetu
   `NEXT_PUBLIC_OWNER_NAME` (opcional; sem ela os textos dizem "o proprietario")
   (nomes apenas; valores sao criados pelo proprietario e apontam para o projeto Supabase **dev**
   na nuvem, ver §9). Banco: o humano aplica os 3 SQL na ordem acima no projeto dev (SQL Editor
-  ou `supabase db push`) + cria admin (Auth + `insert into admins`). Nao usamos Supabase local
+  ou `supabase db push`), seguidos dos arquivos de `supabase/migrations/` em ordem de nome
+  (hoje `site_settings`, `site_storage`, `booking_policy`), + cria admin (Auth + `insert into admins`). Nao usamos Supabase local
   (decisao de 2026-10-29); plano em `docs/analysis/01-diagnostico-execucao.md` §8.
-- Rodar: `npm run dev` (porta 3000). Build: `npm run build` (exige Supabase acessivel e
-  internet para Google Fonts). Deploy: nenhum automatizado.
+- Rodar: `npm run dev` (porta 3000). Build: `npm run build` (exige Supabase acessivel; fontes
+  sao locais, sem internet externa). Deploy: nenhum automatizado.
 
 ## 5. Comandos
 Scripts de `package.json` (fonte unica; esta lista deve ser identica ao `scripts` de la):
 - `npm run dev` — servidor de desenvolvimento na porta 3000; exige `.env.local` apontando para o Supabase dev.
-- `npm run build` — build de producao; exige Supabase dev acessivel e internet (Google Fonts).
+- `npm run build` — build de producao; exige Supabase dev acessivel (sem Google Fonts: fontes locais em `app/fonts/`).
 - `npm run start` — serve o build gerado por `npm run build`.
 - `npm run lint` — `eslint .` com config flat (`eslint.config.mjs`, next/core-web-vitals); nao interativo.
 - `npm run typecheck` — `tsc --noEmit`; nao emite arquivos.
@@ -123,7 +126,7 @@ Forma de trabalho:
 - Framework: nenhum. Localizacao: nenhuma. Cobertura: 0%.
 - Antes de considerar uma alteracao concluida: `/verificar`; teste manual descrito no relato;
   para fluxo de reserva, `/smoke-test` (quando o ambiente local existir).
-- Introduzir um runner (vitest/playwright) e decisao pendente (doc 00). Nao adicionar sem aprovacao.
+- Runner (vitest/playwright): a decisao D0 sera reavaliada em M4-10 e a dependencia so entra com aprovacao. Enquanto isso, GitHub Actions (M0-18) roda typecheck, lint e `node scripts/test-hooks.js` nos PRs para `develop` e `main`; nao ha job de teste de aplicacao.
 
 ## 8. Seguranca
 - Secrets: so via env vars; `SUPABASE_SERVICE_ROLE_KEY` lida unicamente em `lib/supabase/admin.ts`
@@ -135,17 +138,21 @@ Forma de trabalho:
 - Input: zod em todas as rotas; preco/noites/status recalculados no servidor; mudancas de
   status com guarda do estado atual no `where`.
 - Dados sensiveis: `guest_name`, `guest_phone`, `guest_email`, `cancel_token` nunca em logs.
-  Dividas conhecidas: `sw.js` cacheia HTML de `/admin`; `reject` sem guarda de estado;
-  `approve` devolve 500 para "nao pendente"; datas com fuso do servidor.
+  Dividas conhecidas (conferidas no codigo em 2026-11-01; o M1-07 cobriu politicas no banco e nao
+  fechou nenhuma destas): `sw.js` cacheia HTML de `/admin` (M1-12); `app/api/admin/reject` sem guarda
+  de estado no `where` (M2-09/M4-06 [INFERIDO]: sem tarefa propria ainda); `approve` devolve 500
+  para "nao pendente" (`.single()` sem linha); `/api/bookings` calcula datas com o fuso do servidor
+  (M2-09; `/api/availability` ja usa o fuso do hotel). Sem limite de requisicoes nas rotas publicas
+  e sem cabecalhos de seguranca alem do de `sw.js` (M6-07, M6-08; `docs/producao-checklist.md`).
 - Hook `validate-bash.js` bloqueia leitura de `.env*`, git destrutivo/remoto, Supabase/Vercel remotos.
 
 ## 9. Ambientes e deploy
 | Ambiente | Projeto Supabase | Plano | Quem usa | Onde ficam as variaveis |
 |---|---|---|---|---|
 | dev | hotel-engine-dev (South America / Sao Paulo, sa-east-1) | Free (pausa apos 7 dias sem uso; restaurar no dashboard antes de trabalhar, incluindo `build`/`smoke-test`) | desenvolvimento local, Claude Code, aplicacao de migracoes de teste | `.env.local` (criado pelo humano; o agente nunca le o conteudo) |
-| prod | [nome-do-projeto-prod] | [Free / Pro] | producao | somente nas variaveis de ambiente do projeto na Vercel; nunca em `.env.local` nem no repositorio |
+| prod | inexistente ate o M6-01 (criado pelo humano; nome a definir: [PREENCHER]) | Free por D5, com keep-alive (M6-01a) e dump semanal (M6-01b) | producao | somente nas variaveis de ambiente do projeto na Vercel; nunca em `.env.local` nem no repositorio |
 
-- Hospedagem: Vercel, projeto [nome do projeto Vercel anterior] (plano Hobby; sera renomeado no M0-14), ligado ao GitHub: preview automatico por branch e por PR; Production Branch = `main` (congelada). Nenhum CI/CD alem disso. O deploy de producao de 11 de julho (v1.0, codigo original, `main`) foi tirado do acesso publico em 2026-10-31 com Deployment Protection "All Deployments"; os deploys antigos continuam na Vercel.
+- Hospedagem: Vercel, plano Hobby, ligada ao GitHub: preview automatico por branch e por PR. Projeto atual: [PREENCHER nome do projeto Vercel anterior], que sera substituido pelo projeto novo `hotel-engine` (a criar pelo humano, so com Preview e sem Production; M0-14), com Production Branch = `main` (congelada ate o M6). CI de PR: GitHub Actions (M0-18), sem secrets e sem deploy. O deploy de producao de 11 de julho (v1.0, codigo original, `main`) foi tirado do acesso publico em 2026-10-31 com Deployment Protection "All Deployments"; os deploys antigos continuam na Vercel.
 - Migracoes: Claude escreve o arquivo em `supabase/migrations/`; o humano aplica no dev, testa pela
   interface e so depois aplica no prod (fora de horario de reserva). Deploy na Vercel e feito pelo
   humano. Os 5 passos do caminho para producao estao no harness (eixo 3).
