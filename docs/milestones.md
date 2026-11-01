@@ -70,12 +70,12 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | D0 | Testes automatizados | fechada 2026-10-29 | sem por ora; reavaliar antes da 1a reserva real ou do M2 | — |
 | D1 | Moeda | fechada 2026-10-30 (registrada em CLAUDE.md, M0-15) | so BRL ate M2 | — |
 | D2 | Modelo de tenant | fechada 2026-10-30 (registrada em CLAUDE.md, M0-15) | `tenants` + `tenant_id` + RLS | M2-02 |
-| D3 | Roteamento | aberta | sugestao: subdominio primeiro | M3-01, M3-05 |
-| D4 | Pagamento | aberta | sugestao: sinal via Pix | M4-03 |
-| D5 | Prod Free vs Pro | aberta | — | M6-01 |
-| D6 | SaaS ou instancia por cliente | aberta | — | M5-03 |
-| D7 | Gateway de pagamento (qual) | aberta | — | M4-03 |
-| D8 | Provedor de e-mail/WhatsApp | aberta | — | M4-01, M5-02 |
+| D3 | Roteamento | fechada 2026-11-01 (CLAUDE.md) | subdominio primeiro; dominio proprio em M3-05 | — |
+| D4 | Pagamento | fechada 2026-11-01 (CLAUDE.md) | reserva sob aprovacao ate M4-03; depois sinal via Pix; cartao depois | — |
+| D5 | Prod Free vs Pro | fechada 2026-11-01 (CLAUDE.md) | Free com mitigacoes: keep-alive (M6-01a) e dump semanal + teste de restauracao (M6-01b) | — |
+| D6 | SaaS ou instancia por cliente | fechada 2026-11-01 (CLAUDE.md) | SaaS multi-tenant em um deploy | — |
+| D7 | Gateway de pagamento (qual) | fechada 2026-11-01 (CLAUDE.md) | decidido em M4-03; padrao Mercado Pago, alternativa Asaas | — |
+| D8 | Provedor de e-mail/WhatsApp | fechada 2026-11-01 (CLAUDE.md) | e-mail Resend em M4-01; WhatsApp manual via wa.me ate o M5 | — |
 | D9 | Politica de modelo: classes de tarefa x modelo minimo | decidida 2026-10-31 (harness, eixo 4) | local so para classes certificadas por eval | — |
 
 ---
@@ -116,7 +116,7 @@ Pranchas: Painel-Config, Main. Criterio de saida: nenhum texto/marca/contato/ima
 | M1-06 | Painel > Configuracoes: Site e marca, Politicas e horarios | M1-03 | — | *agente:* rota PUT com requireAdmin+zod, revisor APROVADO; *humano:* compara com a prancha logado | [x] | revisor APROVADO COM RESSALVAS (2026-10-31); verificado pelo humano no preview da Vercel em 2026-10-31 |
 | M1-07 | Politicas aplicadas (check-in/out, cancelamento, minimo de noites) | M1-06 | — | *agente:* trigger no Postgres, rotas mapeiam HE001/HE002, **revisor APROVADO**; *humano:* smoke-test | [x] | revisor APROVADO COM RESSALVAS (2026-10-31); HE001 verificado na UI e no banco; HE002 (janela de cancelamento do hospede) coberto por revisor, teste humano pendente no /smoke-test do M4 |
 | M1-08 | Remover arquivos do cliente anterior em public/ | M1-05 | — | *agente:* grep zero em public/; *humano:* icone neutro e quartos sinteticos com foto | [x] | 2026-10-31, verificado pelo humano no preview da Vercel |
-| M1-10 | Decidir destino da feature Momentos/galeria (generica por tenant ou remover) | M1-08 | — | decisao registrada em CLAUDE.md > Decisoes | [h] | GATE humano; origem: descobertas do lote M0-08/09/10 |
+| M1-10 | Decidir destino da feature Momentos/galeria (generica por tenant ou remover) | M1-08 | — | decisao registrada em CLAUDE.md > Decisoes | [x] | 2026-11-01: Momentos vira "Galeria do hotel", generica por tenant (CLAUDE.md); a implementacao da galeria generica ainda nao tem tarefa propria; origem: descobertas do lote M0-08/09/10 |
 | M1-09 | Fechamento do M1: revisor no diff completo, sessao-zero, handoff | M1-07!, M1-08 | — | APROVADO; criterio de saida registrado | [h] | agente 2026-10-31: branch `chore/m1-09-fechamento`, revisor APROVADO COM RESSALVAS (7 achados baixos); eval sessao-zero fora do escopo (M0-07); handoff `2026-11-01-m1-fechamento.md` |
 | M1-11 | U+FFFD (caractere de substituicao) nas mensagens de WhatsApp de confirmacao e cancelamento; escopo: helper comum que monta os textos | M1-07 | — | mensagens sem U+FFFD no preview; causa raiz registrada | [h] | prioridade baixa; usar `investigar-bug`; agente 2026-10-31: branch `fix/m1-11-whatsapp-encoding`; causa [INFERIDO]: BookingCard montava a URL a mao (ver relato); mergeada pelo humano em 2026-11-01 (PR #1); falta preview real no WhatsApp |
 | M1-12 | PWA: `public/sw.js` nao cachear `/admin` (hoje no SHELL e em `cache.put`), ignorar requisicoes fora de http/https (erro `chrome-extension` no console) e acrescentar meta `mobile-web-app-capable` ao lado de `apple-mobile-web-app-capable` | M1-08 | — | *agente:* sw.js sem `/admin` e sem esquemas nao-HTTP, revisor APROVADO; *humano:* logout nao mostra painel em cache; console limpo | [ ] | prioridade media; fazer antes do primeiro deploy publico (CLAUDE.md §8, divida do sw.js); descoberta na verificacao das fontes (2026-10-31) |
@@ -141,20 +141,20 @@ Criterio de saida: dois hosts locais servem dois tenants sem vazamento de cache;
 
 | ID | Tarefa | Dep | Gate | Pronto quando | Status | Nota |
 |---|---|---|---|---|---|---|
-| M3-01 | middleware resolve tenant por host; 404 para host desconhecido | M2-03! | D3 | 2 hosts locais funcionam | [ ] | |
+| M3-01 | middleware resolve tenant por host; 404 para host desconhecido | M2-03! | — | 2 hosts locais funcionam | [ ] | |
 | M3-02 | Cache por tenant (tags) e revalidacao | M3-01 | — | sem vazamento | [ ] | |
 | M3-03 | Tema (cor, fonte) em site_settings -> CSS vars | M1-06 | — | tweak da prancha reproduzido | [ ] | pode adiantar: nao depende de M2 |
 | M3-04 | Sitemap, robots, metadata por tenant | M3-02 | — | verificados nos 2 hosts | [ ] | |
-| M3-05 | Dominio proprio | M3-01 | D3 | fluxo documentado | [ ] | |
+| M3-05 | Dominio proprio | M3-01 | — | fluxo documentado | [ ] | |
 
 ## M4 · Reserva completa
 Pranchas: Site-Busca, Site-Reserva, Site-MinhaReserva, Painel-Reservas, Painel-Calendario, Painel-Hoje. Criterio de saida: /smoke-test completo no dev; nenhum dado de hospede em log.
 
 | ID | Tarefa | Dep | Gate | Pronto quando | Status | Nota |
 |---|---|---|---|---|---|---|
-| M4-01 | Notificacoes e-mail/WhatsApp; templates por tenant | M1-07 | D8 | enviados no dev para contato de teste | [ ] | |
+| M4-01 | Notificacoes e-mail (Resend)/WhatsApp manual; templates por tenant | M1-07 | — | enviados no dev para contato de teste | [ ] | |
 | M4-02 | Site: busca com calendario, minimo de noites, total por estadia (Site-Busca) | M1-04 | — | reproduz prancha; precos do servidor | [ ] | pode adiantar: nao depende de M2 |
-| M4-03 | Pagamento: sinal via gateway; webhook idempotente (Site-Reserva passo 3) | M4-02! | D4, D7 | pagamento de teste confirma reserva | [ ] | |
+| M4-03 | Pagamento: sinal via Pix pelo gateway; webhook idempotente (Site-Reserva passo 3) | M4-02! | — | pagamento de teste confirma reserva | [ ] | D4/D7: escolher o gateway aqui (padrao Mercado Pago, alternativa Asaas) e registrar em CLAUDE.md |
 | M4-04 | Adicionais e reembolso parcial | M4-03 | — | calculo no servidor; smoke-test | [ ] | |
 | M4-05 | Minha reserva: status, saldo, cancelar, mensagens (Site-MinhaReserva) | M4-01 | — | reproduz prancha | [ ] | |
 | M4-06 | Painel Reservas: filtros, tabela, gaveta, acoes com guarda (Painel-Reservas) | M1-06 | — | reproduz prancha | [ ] | pode adiantar single-tenant; M2 ajusta escopo; substituir confirm/prompt nativos do cancelamento pelo fluxo da gaveta (prancha Painel-Reservas) |
@@ -169,16 +169,18 @@ Criterio de saida: hotel novo criado pelo painel aparece no host dele em < 10 mi
 | ID | Tarefa | Dep | Gate | Pronto quando | Status | Nota |
 |---|---|---|---|---|---|---|
 | M5-01 | Fluxo "novo hotel" | M3-02! | — | e2e no dev | [ ] | |
-| M5-02 | Convite de equipe; papeis | M2-08! | D8 | e2e no dev | [ ] | |
-| M5-03 | Plano e faturamento (se SaaS) | M5-01 | D6 | conforme decisao | [ ] | |
+| M5-02 | Convite de equipe; papeis | M2-08! | — | e2e no dev | [ ] | |
+| M5-03 | Plano e faturamento (SaaS, D6) | M5-01 | — | conforme decisao | [ ] | |
 | M5-04 | Ajuda contextual e primeiros passos | M5-01 | — | prancha Painel-Config secao Plano | [ ] | |
 
 ## M6 · Producao
-Criterio de saida: deploy pelo humano via /deploy-checklist; /smoke-test contra prod; backup ativo; historico git limpo.
+Criterio de saida: deploy pelo humano via /deploy-checklist; /smoke-test contra prod; backup ativo (M6-01b) e keep-alive ativo (M6-01a); historico git limpo.
 
 | ID | Tarefa | Dep | Gate | Pronto quando | Status | Nota |
 |---|---|---|---|---|---|---|
-| M6-01 | Projeto prod; variaveis so na Vercel; dominio | M4-08 | D5 | prod criado | [ ] | humano |
+| M6-01 | Projeto prod; variaveis so na Vercel; dominio | M4-08 | — | prod criado | [ ] | humano; plano Free (D5) |
+| M6-01a | Keep-alive do projeto prod (evita pausa do Free por inatividade) | M6-01 | — | rotina ativa e verificada; falha visivel | [ ] | mitigacao da D5 |
+| M6-01b | Dump semanal do banco prod + teste de restauracao | M6-01 | — | dump semanal agendado; restauracao testada num projeto descartavel e registrada | [ ] | mitigacao da D5; sem dados reais fora do ambiente aprovado |
 | M6-02 | /deploy-checklist e docs/runbook.md | — | — | command imprime os passos | [h] | pode adiantar a qualquer momento; agente 2026-10-31: branch `docs/m6-02-deploy-checklist` (command + runbook inicial); falta humano conferir o runbook |
 | M6-03 | Observabilidade sem PII | M6-01 | — | CLAUDE.md §9 completo | [ ] | |
 | M6-04 | Limpeza do historico git antes de repo publico | M0-14 | — | grep no historico zero | [ ] | humano executa; agente planeja |

@@ -192,4 +192,14 @@ Forma de trabalho:
 - 2026-10-31: historico do git recomecado em um unico commit (eeb1f07) para publicacao; o historico anterior ficou arquivado em privado. Hashes de commits citados em docs anteriores nao existem mais neste repositorio.
 - 2026-10-31: protecao remota de `develop` e `main` ativa (rulesets no GitHub; push direto recusado com GH013, testado pelo proprietario em 2026-10-31). E a barreira real do push; o hook `validate-bash.js` e defesa em profundidade.
 - 2026-10-31: agente pode `git push [-u] origin <branch-de-trabalho>` e `gh pr create` (base `develop`, texto via `--body-file`); merge, push em main/develop e demais `gh` seguem humanos (M0-16, PR #2 mergeado em 2026-11-01).
+- 2026-11-01: D3 roteamento: subdominio primeiro; dominio proprio do tenant em M3-05.
+- 2026-11-01: D4 pagamento: reserva sob aprovacao ate M4-03; depois sinal via Pix; cartao depois.
+- 2026-11-01: D5 producao no plano Free com mitigacoes: keep-alive (M6-01a) e dump semanal com teste de restauracao (M6-01b).
+- 2026-11-01: D6 SaaS multi-tenant em um unico deploy (nao ha instancia por cliente).
+- 2026-11-01: D7 gateway de pagamento decidido em M4-03; padrao Mercado Pago, alternativa Asaas.
+- 2026-11-01: D8 e-mail via Resend em M4-01; WhatsApp manual via wa.me ate o M5.
+- 2026-11-01: tarifacao = base por noite por tipo de quarto + modificadores por periodo, calculados no Postgres; sem preco por pessoa.
+- 2026-11-01: papeis owner/recepcao/limpeza aplicados por RLS (M2-08).
+- 2026-11-01: runtime Node 22 LTS fixado em `engines`; Next 15 depois do M0-11.
+- 2026-11-01: M1-10 resolvido: Momentos vira "Galeria do hotel", generica por tenant.
 - 2026-11-01: edicao de docs em lote por awk/sed e proibida ao agente; usar Edit por trecho e conferir `git diff --stat` (uma substituicao em lote apagou blocos do milestones.md sem erro visivel).
