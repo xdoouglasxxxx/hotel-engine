@@ -132,7 +132,7 @@ Criterio de saida: dois tenants de seed isolados; tenant-auditor sem critica/alt
 | M2-06 | Rotas: tenant explicito com service role; IDOR; 404/403 consistentes | M2-03 | — | revisor + auditor APROVADO | [ ] | |
 | M2-07 | Seed com 2 tenants; teste cruzado em evals/tenant/ | M2-06 | — | 3 cenarios falham como esperado | [ ] | |
 | M2-08 | Papeis por RLS; tela Equipe | M2-06 | — | prancha Painel-Config secao Equipe | [ ] | |
-| M2-09 | Endurecer rotas de settings e cancel (regex do path, strip do zod, 404 generico, cancelled_by) | M2-06 | — | revisor sem ressalvas medias nessas rotas | [ ] | origem: ressalvas do revisor em M1-05/06/07 (2026-10-31) |
+| M2-09 | Endurecer rotas de settings e cancel (regex do path, strip do zod, 404 generico, cancelled_by) | M2-06 | — | revisor sem ressalvas medias nessas rotas | [ ] | origem: ressalvas do revisor em M1-05/06/07 (2026-10-31). Inclui os 7 achados baixos do fechamento do M1 (M1-09; decisao do proprietario em 2026-11-01, sem M1-13): cancel_token fora do payload RSC e prop tipada em `/cancelar/[id]`; erro transitorio nao cacheado em `lib/site-settings.ts`; policy de select do bucket `site`; arquivo orfao ao remover logo/hero; HE001 so no INSERT; aviso da janela de cancelamento com `published=false`; fuso do servidor em `/api/bookings`. Detalhe: `docs/handoffs/2026-11-01-m1-fechamento.md` |
 
 ## M3 · Roteamento e tema por tenant
 Criterio de saida: dois hosts locais servem dois tenants sem vazamento de cache; tema por tenant aplicado.
