@@ -55,7 +55,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | Milestones ativos | M0 (fechando) e M1 (em andamento, autorizado) |
 | Branch de trabalho | `develop` (integracao; branches de trabalho saem dela) |
 | Modelo em uso | Sonnet (padrao) / Fable |
-| Entrega sugerida para o agente | E4-A "Reservas v1" (M4-06, M4-08, M1-12; M4-02 ja em PR #9); em seguida E2-A (documento). E0-B aguarda autorizacao de dependencias |
+| Entrega sugerida para o agente | E4-A (M1-12; M4-02 ja em PR #9), depois E4-B (M4-06); E2-A (documento) pode ir a qualquer momento. E0-B1 e E0-B2 aguardam autorizacao de dependencias |
 | Bloqueios | nenhum de agente. Ressalvas medias do revisor movidas para M2-09 |
 
 ## Fila do humano (o que so voce destrava)
@@ -69,7 +69,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | 4 | Criar o projeto novo `hotel-engine` na Vercel so com Preview (sem Production) e renomear repo e projeto prod (M0-14) | M0-14, M6-04 |
 | 5 | Decidir o destino de Momentos/galeria (generica por tenant ou remover) e registrar em `CLAUDE.md > Decisoes` | M1-10 |
 | 6 | Conferir o `.hermes.md` ajustado (linha 11: push de branch de trabalho e PR permitidos ao delegar ao Claude Code) | higiene |
-| 7 | Entrega E0-B: autorizar a atualizacao de dependencias (Next 15/React 19 e zod 4) em PR proprio | E0-B (M0-11, M0-12) |
+| 7 | Autorizar a atualizacao de dependencias e registrar em "Autorizacoes em pe": primeiro E0-B1 (Next 15, React 19, eslint-config-next); zod 4 (E0-B2) so depois, com autorizacao propria | E0-B1 (M0-11), E0-B2 (M0-12) |
 
 ## Entregas
 
@@ -77,8 +77,11 @@ Cada entrega e uma branch + um PR + um handoff (Protocolo v3). As tarefas seguem
 
 | ID | Entrega | Tarefas | Tipo de mudanca (matriz) | Estado | Nota |
 |---|---|---|---|---|---|
-| E4-A | Reservas v1 | M4-02 (PR #9), M4-06, M4-08, M1-12 | UI + API/rotas; `revisor` obrigatorio (rota e `public/sw.js`) | em andamento: M4-02 em PR, aguardando verificacao do humano | ao planejar, conferir os limites (4 tarefas, ~400 linhas fora docs, 3 dias) e os sinais de divisao; M1-12 mexe no service worker e pode virar entrega propria se o plano apontar riscos diferentes |
-| E0-B | Upgrade Next 15 | M0-11, M0-12 | dependencias; entrega propria | aguardando autorizacao do humano (fila, item 7) | zod 4 em PR separado se o plano indicar risco diferente (CLAUDE.md: upgrades grandes ficam separados de mudanca funcional) |
+| E4-A | Busca de disponibilidade | M4-02 (PR #9), M1-12 | UI + API/rotas; `revisor` obrigatorio (rota e `public/sw.js`) | em andamento: M4-02 em PR, aguardando verificacao do humano; M1-12 aberta | confirmado pelo proprietario (2026-11-01). Se o plano apontar risco distinto para M1-12 (service worker), ela vira a entrega propria E1-X |
+| E4-B | Painel Reservas | M4-06 | UI + API/rotas; `revisor` obrigatorio | aberta | entrega propria; nao juntar com M4-08 (limites h/i) |
+| E4-C | Painel Hoje | M4-08 | UI (+ rotas, se houver); `revisor` se tocar rota | aberta | entrega propria; nao juntar com M4-06 (limites h/i); dep. M4-06 so de ordem |
+| E0-B1 | Upgrade Next 15 | M0-11 (Next 15, React 19, eslint-config-next) | dependencias; entrega propria | `[ ]`: aguarda autorizacao de dependencias (fila, item 7) | a autorizacao entra em "Autorizacoes em pe" quando o proprietario liberar; ate la a entrega nao comeca |
+| E0-B2 | Upgrade zod 4 | M0-12 | dependencias; entrega propria | `[ ]`: depende da E0-B1 (`!`) e de autorizacao propria | PR separado do Next (CLAUDE.md: upgrades grandes ficam separados de mudanca funcional) |
 | E2-A | Plano multi-tenant | M2-01 | Docs (documento) | aberta | pode comecar com M1 em `[h]`; gate D2 ja fechado |
 
 ## Autorizacoes em pe
