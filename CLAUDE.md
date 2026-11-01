@@ -189,3 +189,13 @@ Forma de trabalho:
 - 2026-10-31: a maquina do agente nunca guarda segredo de producao; .env.local contem apenas chaves do hotel-engine-dev, descartaveis. O hook de .env e defesa contra erro, nao contra ma-fe.
 - 2026-10-31: o deploy de producao do v1.0 (codigo original, main) estava publico em [URL Vercel anterior] sem uso real; foi protegido com Deployment Protection "All Deployments" (reversivel). Production Branch segue `main`, congelada ate o M6.
 - 2026-10-31: seed de exemplo do schema.sql trocado por dados sinteticos para publicacao; logica SQL inalterada
+- 2026-11-01: D3 roteamento: subdominio primeiro; dominio proprio do tenant em M3-05.
+- 2026-11-01: D4 pagamento: reserva sob aprovacao ate M4-03; depois sinal via Pix; cartao depois.
+- 2026-11-01: D5 producao no plano Free com mitigacoes: keep-alive (M6-01a) e dump semanal com teste de restauracao (M6-01b).
+- 2026-11-01: D6 SaaS multi-tenant em um unico deploy (nao ha instancia por cliente).
+- 2026-11-01: D7 gateway de pagamento decidido em M4-03; padrao Mercado Pago, alternativa Asaas.
+- 2026-11-01: D8 e-mail via Resend em M4-01; WhatsApp manual via wa.me ate o M5.
+- 2026-11-01: tarifacao = base por noite por tipo de quarto + modificadores por periodo, calculados no Postgres; sem preco por pessoa.
+- 2026-11-01: papeis owner/recepcao/limpeza aplicados por RLS (M2-08).
+- 2026-11-01: runtime Node 22 LTS fixado em `engines`; Next 15 depois do M0-11.
+- 2026-11-01: M1-10 resolvido: Momentos vira "Galeria do hotel", generica por tenant.
