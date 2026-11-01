@@ -76,7 +76,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | 7 | Depois de o PR da D-1 rodar o job `ci`: exigir o status check `ci` no ruleset de `develop`; ligar secret scanning, push protection e alertas do Dependabot | M0-18 |
 | 8 | Conferir o `.hermes.md` ajustado (linha 11: push de branch de trabalho e PR permitidos ao delegar ao Claude Code) | higiene |
 | 9 | **A-0:** ler `docs/architecture-v2.md`, aceitar ou corrigir; mergear o PR da D-1 (reconciliacao) antes ou junto com o da A-0 | A-0; T0-B; T0-A |
-| 10 | Desenhar no canvas as pranchas novas **Painel-Resultado** (entrada do `/admin`) e **Painel-Concierge** (console do operador e secoes Concierge/Pagamentos em Configuracoes) e exportar para `docs/design/exports/` | T1-B3, T1-C2 |
+| 10 | Desenhar no canvas as pranchas novas **Painel-Resultado** (entrada do `/admin`) e **Painel-Concierge** (console do operador e secoes Concierge/Pagamentos em Configuracoes) e exportar para `docs/design/exports/` | T1-B03, T1-B04, T1-C03 |
 | 11 | Escolher os **3 pilotos** (com trafego proprio) e os termos (base por unidade, 5% sobre diretas confirmadas, garantia de 60 dias); decidir o fato gerador do variavel (`architecture-v2` G.1 item 1) | T0-A (aceite), 1o fechamento |
 | 12 | Criar a conta do gateway Pix (Mercado Pago) em **sandbox** para o dev e registrar so os **nomes** das variaveis; decidir `deposit_percent` e retencao do sinal (G.1 item 3) | T1-A |
 | 13 | Decidir o minimo de rate limit/anti-abuso antes de ligar `auto_hold` num piloto (G.1 item 4; mecanismo do M6-07) | E6-A, T1-A (piloto) |
@@ -405,7 +405,7 @@ Linhas **movidas sem alteracao de conteudo** (texto original preservado). Motivo
 | M4-08 | Painel Hoje: KPIs, chegadas/saidas, aprovacoes, inbox (Painel-Hoje) | M4-06 | — | reproduz prancha | [a] | origem M4 e entrega E4-C; o painel Resultado (T1-C3) ocupa a entrada do `/admin`; prancha Painel-Hoje congelada |
 | M5-02 | Convite de equipe; papeis | M2-08! | — | e2e no dev | [a] | origem M5; depende de M2-08 (tambem adiada) |
 
-Tambem adiadas **sem mudar de tabela** (continuam nas linhas originais, marcadas aqui): M1-10 (a implementacao da galeria generica por tenant nao tem tarefa propria e fica fora das fases), M4-04 (adicionais e reembolso parcial: nao ha reembolso na v1), M4-05 (pagina "Minha reserva" completa: a v1 so adapta `/cancelar/[id]` em T1-A5) e M4-10 (reavaliar D0 acontece antes do primeiro piloto com sinal real, ver decisao de testes em CLAUDE.md).
+Tambem adiadas **sem mudar de tabela** (continuam nas linhas originais, marcadas aqui): M1-10 (a implementacao da galeria generica por tenant nao tem tarefa propria e fica fora das fases), M4-04 (adicionais e reembolso parcial: nao ha reembolso na v1), M4-05 (pagina "Minha reserva" completa: a v1 so adapta `/cancelar/[id]` em T1-A05) e M4-10 (reavaliar D0 acontece antes do primeiro piloto com sinal real, ver decisao de testes em CLAUDE.md).
 
 ## Mapa M -> T (nenhuma tarefa foi apagada)
 
