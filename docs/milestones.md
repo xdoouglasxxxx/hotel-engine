@@ -33,17 +33,18 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 
 | Campo | Valor |
 |---|---|
-| Ultima atualizacao | 2026-10-31 (agente: M0-16 em `chore/m0-16-push-branches`; push e PR deste primeiro sao do humano; hook libera push so depois do merge dele) |
+| Ultima atualizacao | 2026-11-01 (agente: M0-16 mergeada pelo humano (PR #2); PRs #3 (M1-09) e #4 (M6-02) abertos; branch final de docs a seguir; ver `docs/handoffs/2026-11-01-fila-de-aprovacao.md`) |
 | Milestones ativos | M0 (fechando) e M1 (em andamento, autorizado) |
-| Branch de trabalho | `chore/m0-16-push-branches` (a partir de `develop`; sem push) |
+| Branch de trabalho | `docs/2026-11-01-noite-autonoma` (docs); PRs abertos: `chore/m1-09-fechamento`, `docs/m6-02-deploy-checklist` |
 | Modelo em uso | local `qwen3-coder-16k` certificado so para leitura/triagem; Sonnet/Fable para rotas, SQL, RLS, revisor, upgrades (ver harness, eixo 4) |
-| Lote sugerido para o agente | M1-09 em `chore/m1-09-fechamento` (depois do merge do M0-16); M1-11 (baixa) quando houver folga; M1-10 e gate humano |
+| Lote sugerido para o agente | M1-12 (PWA, media); M4-02 e M4-06 (nao feitos na noite de 2026-10-31: contexto longo); M2-01 (plano, so documento, nao feito). M1-10 e gate humano |
 | Bloqueios | nenhum de agente. Ressalvas medias do revisor movidas para M2-09 |
 
 ## Fila do humano (o que so voce destrava)
 
 | Prioridade | Item | Libera |
 |---|---|---|
+| 0 | Seguir `docs/handoffs/2026-11-01-fila-de-aprovacao.md`: conferir ruleset remoto, push e PR de cada branch na ordem sugerida; merge da M0-16 primeiro | M0-16, M1-09, M1-11, M6-02 |
 | 1 | Rodar `evals/sessao-zero.md` em sessao nova com Sonnet (veredito) e registrar; registrar tambem a rodada com `qwen3-coder-16k` como certificacao local | M0-07 |
 | 2 | Registrar D1 e D2 em `CLAUDE.md > Decisoes` (ja decididas no chat de 2026-10-30) | M0-15, fecha D1/D2 |
 | 3 | Renomear repo, Vercel e projeto prod para hotel-engine (M0-14) | M0-14, M6-04 |
@@ -97,7 +98,7 @@ Criterio de saida: `test-hooks` verde; `/verificar` roda typecheck+lint; sessao-
 | M0-13 | Varredura final de acoplamento (marca, geo, imagens, dominio, package name) | M0-04 | — | inventario 03 zerado ou movido para M1 | [~] | boa parte ja coberta por M1-04/M1-08; restam package name (M0-14) e icones |
 | M0-14 | Renomear repo, package, Vercel e prod para hotel-engine; .gitattributes | M0-13 | — | *agente:* package.json, .gitattributes, referencias em .claude/ docs/ scripts/; *humano:* repo, Vercel, prod | [ ] | *agente feito 2026-10-31* (package.json/lock, .gitattributes, PDF renomeado); falta *humano* (fila 3); producao v1.0 da Vercel protegida em 2026-10-31 (All Deployments); ao renomear, conferir variaveis de producao (so nomes) e decidir se os deploys antigos de producao sao apagados |
 | M0-15 | GATE: registrar D1 e D2 em CLAUDE.md | — | D1, D2 | linhas presentes | [x] | humano na fila (2) |
-| M0-16 | Push para branches de trabalho e PR pelo agente; hook permite so `git push origin <branch nao protegida>`; `gh pr create` liberado, `gh pr merge` bloqueado | M0-10! | — | test-hooks verde com os casos de push; revisor APROVADO | [~] | *agente feito 2026-10-31* (hook, settings, test-hooks 169 casos FALHAS: 0, docs); revisor 2a rodada APROVADO COM RESSALVAS (achado medio de alias via `git -c` corrigido depois; restam falsos positivos de leitura e `git send-pack`, baixos); falta *humano*: push e PR deste, merge. Rulesets ativos em develop e main (gate cumprido). `.hermes.md` linha 11 ainda proibe push (fila do humano) |
+| M0-16 | Push para branches de trabalho e PR pelo agente; hook permite so `git push origin <branch nao protegida>`; `gh pr create` liberado, `gh pr merge` bloqueado | M0-10! | — | test-hooks verde com os casos de push; revisor APROVADO | [h] | mergeada pelo humano em 2026-11-01 (PR #2); rulesets ativos em develop e main (gate cumprido; push direto recusado com GH013, testado pelo humano); revisor 2a rodada APROVADO COM RESSALVAS (restam falsos positivos de leitura e `git send-pack`, baixos); `.hermes.md` linha 11 ainda proibe push (fila do humano) |
 | M0-17 | Fontes locais: trocar `next/font/google` por `next/font/local` (build sem rede externa) | — | — | build local passa; typecheck ok; layout sem import de `next/font/google` | [x] | 2026-10-31, branch `fix/fontes-locais`; origem: falha intermitente do build na Vercel; harness eixo 3 |
 
 ## M1 · Configuracao do hotel por tenant (site_settings)
@@ -114,8 +115,8 @@ Pranchas: Painel-Config, Main. Criterio de saida: nenhum texto/marca/contato/ima
 | M1-07 | Politicas aplicadas (check-in/out, cancelamento, minimo de noites) | M1-06 | — | *agente:* trigger no Postgres, rotas mapeiam HE001/HE002, **revisor APROVADO**; *humano:* smoke-test | [x] | revisor APROVADO COM RESSALVAS (2026-10-31); HE001 verificado na UI e no banco; HE002 (janela de cancelamento do hospede) coberto por revisor, teste humano pendente no /smoke-test do M4 |
 | M1-08 | Remover arquivos do cliente anterior em public/ | M1-05 | — | *agente:* grep zero em public/; *humano:* icone neutro e quartos sinteticos com foto | [x] | 2026-10-31, verificado pelo humano no preview da Vercel |
 | M1-10 | Decidir destino da feature Momentos/galeria (generica por tenant ou remover) | M1-08 | — | decisao registrada em CLAUDE.md > Decisoes | [h] | GATE humano; origem: descobertas do lote M0-08/09/10 |
-| M1-09 | Fechamento do M1: revisor no diff completo, sessao-zero, handoff | M1-07!, M1-08 | — | APROVADO; criterio de saida registrado | [ ] | |
-| M1-11 | U+FFFD (caractere de substituicao) nas mensagens de WhatsApp de confirmacao e cancelamento; escopo: helper comum que monta os textos | M1-07 | — | mensagens sem U+FFFD no preview; causa raiz registrada | [ ] | prioridade baixa; usar `investigar-bug` |
+| M1-09 | Fechamento do M1: revisor no diff completo, sessao-zero, handoff | M1-07!, M1-08 | — | APROVADO; criterio de saida registrado | [h] | agente 2026-10-31: branch `chore/m1-09-fechamento`, revisor APROVADO COM RESSALVAS (7 achados baixos); eval sessao-zero fora do escopo (M0-07); handoff `2026-11-01-m1-fechamento.md` |
+| M1-11 | U+FFFD (caractere de substituicao) nas mensagens de WhatsApp de confirmacao e cancelamento; escopo: helper comum que monta os textos | M1-07 | — | mensagens sem U+FFFD no preview; causa raiz registrada | [h] | prioridade baixa; usar `investigar-bug`; agente 2026-10-31: branch `fix/m1-11-whatsapp-encoding`; causa [INFERIDO]: BookingCard montava a URL a mao (ver relato); mergeada pelo humano em 2026-11-01 (PR #1); falta preview real no WhatsApp |
 | M1-12 | PWA: `public/sw.js` nao cachear `/admin` (hoje no SHELL e em `cache.put`), ignorar requisicoes fora de http/https (erro `chrome-extension` no console) e acrescentar meta `mobile-web-app-capable` ao lado de `apple-mobile-web-app-capable` | M1-08 | — | *agente:* sw.js sem `/admin` e sem esquemas nao-HTTP, revisor APROVADO; *humano:* logout nao mostra painel em cache; console limpo | [ ] | prioridade media; fazer antes do primeiro deploy publico (CLAUDE.md §8, divida do sw.js); descoberta na verificacao das fontes (2026-10-31) |
 
 ## M2 · Multi-tenant no dado
@@ -131,7 +132,7 @@ Criterio de saida: dois tenants de seed isolados; tenant-auditor sem critica/alt
 | M2-06 | Rotas: tenant explicito com service role; IDOR; 404/403 consistentes | M2-03 | — | revisor + auditor APROVADO | [ ] | |
 | M2-07 | Seed com 2 tenants; teste cruzado em evals/tenant/ | M2-06 | — | 3 cenarios falham como esperado | [ ] | |
 | M2-08 | Papeis por RLS; tela Equipe | M2-06 | — | prancha Painel-Config secao Equipe | [ ] | |
-| M2-09 | Endurecer rotas de settings e cancel (regex do path, strip do zod, 404 generico, cancelled_by) | M2-06 | — | revisor sem ressalvas medias nessas rotas | [ ] | origem: ressalvas do revisor em M1-05/06/07 (2026-10-31) |
+| M2-09 | Endurecer rotas de settings e cancel (regex do path, strip do zod, 404 generico, cancelled_by) | M2-06 | — | revisor sem ressalvas medias nessas rotas | [ ] | origem: ressalvas do revisor em M1-05/06/07 (2026-10-31). Inclui os 7 achados baixos do fechamento do M1 (M1-09; decisao do proprietario em 2026-11-01, sem M1-13): cancel_token fora do payload RSC e prop tipada em `/cancelar/[id]`; erro transitorio nao cacheado em `lib/site-settings.ts`; policy de select do bucket `site`; arquivo orfao ao remover logo/hero; HE001 so no INSERT; aviso da janela de cancelamento com `published=false`; fuso do servidor em `/api/bookings`. Detalhe: `docs/handoffs/2026-11-01-m1-fechamento.md` |
 
 ## M3 · Roteamento e tema por tenant
 Criterio de saida: dois hosts locais servem dois tenants sem vazamento de cache; tema por tenant aplicado.
@@ -176,7 +177,7 @@ Criterio de saida: deploy pelo humano via /deploy-checklist; /smoke-test contra 
 | ID | Tarefa | Dep | Gate | Pronto quando | Status | Nota |
 |---|---|---|---|---|---|---|
 | M6-01 | Projeto prod; variaveis so na Vercel; dominio | M4-08 | D5 | prod criado | [ ] | humano |
-| M6-02 | /deploy-checklist e docs/runbook.md | — | — | command imprime os passos | [ ] | pode adiantar a qualquer momento |
+| M6-02 | /deploy-checklist e docs/runbook.md | — | — | command imprime os passos | [h] | pode adiantar a qualquer momento; agente 2026-10-31: branch `docs/m6-02-deploy-checklist` (command + runbook inicial); falta humano conferir o runbook |
 | M6-03 | Observabilidade sem PII | M6-01 | — | CLAUDE.md §9 completo | [ ] | |
 | M6-04 | Limpeza do historico git antes de repo publico | M0-14 | — | grep no historico zero | [ ] | humano executa; agente planeja |
 | M6-05 | Migracoes no prod pelo humano; smoke-test contra prod | M6-02! | — | checklist assinado | [ ] | humano |
