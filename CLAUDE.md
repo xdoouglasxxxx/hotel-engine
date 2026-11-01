@@ -189,6 +189,9 @@ Forma de trabalho:
 - 2026-10-31: a maquina do agente nunca guarda segredo de producao; .env.local contem apenas chaves do hotel-engine-dev, descartaveis. O hook de .env e defesa contra erro, nao contra ma-fe.
 - 2026-10-31: o deploy de producao do v1.0 (codigo original, main) estava publico em [URL Vercel anterior] sem uso real; foi protegido com Deployment Protection "All Deployments" (reversivel). Production Branch segue `main`, congelada ate o M6.
 - 2026-10-31: seed de exemplo do schema.sql trocado por dados sinteticos para publicacao; logica SQL inalterada
+- 2026-10-31: historico do git recomecado em um unico commit (eeb1f07) para publicacao; o historico anterior ficou arquivado em privado. Hashes de commits citados em docs anteriores nao existem mais neste repositorio.
+- 2026-10-31: protecao remota de `develop` e `main` ativa (rulesets no GitHub; push direto recusado com GH013, testado pelo proprietario em 2026-10-31). E a barreira real do push; o hook `validate-bash.js` e defesa em profundidade.
+- 2026-10-31: agente pode `git push [-u] origin <branch-de-trabalho>` e `gh pr create` (base `develop`, texto via `--body-file`); merge, push em main/develop e demais `gh` seguem humanos (M0-16, PR #2 mergeado em 2026-11-01).
 - 2026-11-01: D3 roteamento: subdominio primeiro; dominio proprio do tenant em M3-05.
 - 2026-11-01: D4 pagamento: reserva sob aprovacao ate M4-03; depois sinal via Pix; cartao depois.
 - 2026-11-01: D5 producao no plano Free com mitigacoes: keep-alive (M6-01a) e dump semanal com teste de restauracao (M6-01b).
