@@ -11,9 +11,9 @@ Convencao: itens marcados **[FALTA]** ainda nao existem; a prioridade (P1 > P2 >
 - Precedencia quando regras discordam: hook > rule > skill > prompt do humano > preferencia do modelo (secao 0).
 - Quem edita o repo: entre os agentes, so o Claude Code. Quem revisa: `revisor` (e `tenant-auditor` na fase multi-tenant). Quem so le: `explorer` (eixo 1, matriz de poder).
 - Hermes = memoria entre sessoes e orquestrador, configurado em `.hermes.md`; nunca edita o repo; nunca chama `claude` com `--bare` (eixo 1, matriz de poder; eixo 5, posicao do Hermes).
-- Proibido para qualquer agente: `git push`, `supabase db push` / `migration up --linked`, `psql` remoto, `vercel --prod` ou deploy, ler `.env*` alem do `.env.example`, editar `supabase/schema.sql` e os `migration-*.sql` historicos, policy `using (true)`, desligar RLS (eixo 4, matriz de aprovacao; hooks `validate-bash.js` e `post-edit.js`; rules `verificacao-e-git.md` e `dados-e-supabase.md`).
-- Pede confirmacao ao humano: abrir PR (o `git push` em si e do humano; o hook bloqueia), dependencia nova, gravar memoria (Hermes), criar skill ou rule (eixo 4, matriz de aprovacao).
-- Humano e quem aplica migracao (no projeto `hotel-engine-dev`, depois no prod), faz push e deploy (eixo 1, matriz de poder; eixo 3, caminho para producao).
+- Proibido para qualquer agente: push para `main`/`develop` ou com force, `gh pr merge`/`gh api`, `supabase db push` / `migration up --linked`, `psql` remoto, `vercel --prod` ou deploy, ler `.env*` alem do `.env.example`, editar `supabase/schema.sql` e os `migration-*.sql` historicos, policy `using (true)`, desligar RLS (eixo 4, matriz de aprovacao; hooks `validate-bash.js` e `post-edit.js`; rules `verificacao-e-git.md` e `dados-e-supabase.md`).
+- Agente faz sozinho: `git push [-u] origin <branch-de-trabalho>` e `gh pr create --base develop` (hook `validate-bash.js`, M0-16); merge e do humano. Pede confirmacao ao humano: dependencia nova, gravar memoria (Hermes), criar skill ou rule (eixo 4, matriz de aprovacao).
+- Humano e quem aplica migracao (no projeto `hotel-engine-dev`, depois no prod), faz merge de PR e deploy (eixo 1, matriz de poder; eixo 3, caminho para producao).
 - Tres clientes Supabase: `lib/supabase/client.ts` (anon, browser), `server.ts` (anon + cookies, SSR), `admin.ts` (service role; so em `app/api/**/route.ts` ou Server Component que precisa ler sem sessao, ex.: `app/cancelar/[id]/page.tsx`) (`.claude/rules/dados-e-supabase.md`; `CLAUDE.md` §3).
 - Pronto = `/verificar` passa + migracao (se houver) aplicada no dev e confirmada pelo humano + `types/database.ts` atualizado + `revisor` sem apontamento bloqueante + relato entregue (eixo 3, contrato de "pronto").
 - Ambientes: dev = `hotel-engine-dev` (sa-east-1, plano Free, pausa apos 7 dias sem uso); prod ainda nao configurado (placeholders em `CLAUDE.md` §9); nenhum deploy ate o upgrade de next/zod (`CLAUDE.md` §9 e Decisoes).
@@ -73,12 +73,12 @@ Quando uma dessas secoes estiver vazia ou desatualizada, isso e uma pendencia do
 
 | Ator | Ler repo | Editar repo | Bash | Rede | Banco | Observacao |
 |---|---|---|---|---|---|---|
-| Claude Code (principal) | sim | sim | sim, filtrado por hook | sim | **nao** | Unico que edita. Hooks bloqueiam `.env*`, `db push`, `psql` remoto, `git push` |
+| Claude Code (principal) | sim | sim | sim, filtrado por hook | sim | **nao** | Unico que edita. Hooks bloqueiam `.env*`, `db push`, `psql` remoto, push fora de `origin <branch-de-trabalho>`, `gh` alem de `pr create`/leitura |
 | `explorer` | sim | nao | nao | nao | nao | So `Read`, `Grep`, `Glob` |
 | `revisor` | sim | nao | so leitura (`git diff/show/log`, `typecheck`, `lint`) | nao | nao | Emite veredito |
 | `tenant-auditor` | sim | nao | nao | nao | nao | So a partir da fase multi-tenant |
 | Hermes | sim (exceto `.env*`) | **nao** | so leitura + `claude -p` | nao | nao | Delega ao Claude Code. Nunca `--bare` nem `--dangerously-skip-permissions` |
-| Humano | sim | sim | sim | sim | sim | Unico que aplica migracao, faz push e deploy |
+| Humano | sim | sim | sim | sim | sim | Unico que aplica migracao, faz merge de PR e deploy |
 
 ### Regras de sessao
 
@@ -200,7 +200,8 @@ se exige autenticacao manual, fica como pendencia com o passo humano descrito.
 | Ler codigo, rules, docs | X | | |
 | Editar codigo em branch | X | | |
 | `git commit` | X | | |
-| `git push`, abrir PR | | X | |
+| `git push [-u] origin <branch-de-trabalho>`, `gh pr create --base develop` | X | | |
+| Push para `main`/`develop`, force, `gh pr merge`, `gh api`, `git remote` de escrita | | | X |
 | Adicionar dependencia | | X | |
 | Criar migracao (arquivo) | X | | |
 | Aplicar migracao (dev ou prod) | | | X (humano) |
@@ -220,8 +221,9 @@ A maquina onde o agente roda nunca contem segredo de producao. Segredos de dev s
 
 | Data | Risco | Por que aceito | Mitigacao | Revisar em |
 |---|---|---|---|---|
-| 2026-10-31 | `Copy-Item`, `Move-Item` e `mkdir` na allowlist escrevem fora do alcance do `post-edit` | preco de um agente util para organizar arquivos | `validate-bash` bloqueia `.env*` e `supabase/schema.sql` por nome; revisor no diff; git mostra tudo | M0-16 ou primeiro incidente |
-| 2026-10-31 | `node scripts/*` e `npx eslint*` permitem execucao de codigo do repo | necessario para test-hooks, verificacao e lint | `scripts/` e revisado como codigo; Edit/Write em `scripts/test-hooks.js` e `.claude/` exigem confirmacao | M0-16 |
+| 2026-10-31 | `Copy-Item`, `Move-Item` e `mkdir` na allowlist escrevem fora do alcance do `post-edit` | preco de um agente util para organizar arquivos | `validate-bash` bloqueia `.env*` e `supabase/schema.sql` por nome; revisor no diff; git mostra tudo | primeiro incidente (M0-16 entregue: push so de branch de trabalho e ruleset remoto) |
+| 2026-10-31 | `node scripts/*` e `npx eslint*` permitem execucao de codigo do repo | necessario para test-hooks, verificacao e lint | `scripts/` e revisado como codigo; Edit/Write em `scripts/test-hooks.js` e `.claude/` exigem confirmacao; com push liberado, codigo alterado so chega a develop/main por PR revisado e merge humano | primeiro incidente |
+| 2026-10-31 | hook de push/`gh` (M0-16) e heuristico: `bash -c "git push ..."`, `eval` e variaveis de ambiente do git/gh (ex.: `GIT_SSH_COMMAND`, `GH_HOST`) escapam; `git config` de remote/url/pushurl/insteadOf/alias e bloqueado | regex nao fecha interpretadores aninhados | ruleset remoto de develop/main (PR obrigatorio, sem force push, sem delecao) e a barreira real; branch de trabalho publicada tem baixo dano; segmento `git commit ...` e isento da checagem de push (a mensagem pode citar push; preferir `git commit -F`), e `git log --grep push` ou `grep "git push"` podem bloquear por falso positivo; flags de push vao antes de `origin` e a branch por extenso (sem `HEAD`) | primeiro incidente |
 | 2026-10-31 | `git switch -f`, `git stash drop/clear` passam pelos wildcards | baixo impacto: so trabalho local nao commitado | protocolo: commit por objetivo ao fim de cada lote | revisar se houver perda de trabalho |
 | 2026-10-31 | `@eslint/eslintrc` usado via dependencia transitiva, nao declarado no `package.json` | o upgrade do Next (M0-11) troca o ESLint | anotado em M0-11 | M0-11 |
 | 2026-10-31 | timeout do typecheck no `stop-verify` e tratado como falha | melhor falhar fechado | mensagem distingue timeout (commit extra) | nenhum |
@@ -249,7 +251,7 @@ flowchart TD
     V --> REV[revisor\n+ tenant-auditor na fase multi-tenant]
     REV -->|BLOQUEADO| API
     REV -->|APROVADO| REL[Relato + commit]
-    REL --> PUSH{Humano: push,\nmigracao prod, deploy}
+    REL --> PUSH{Agente: push de branch + PR\nHumano: merge, migracao prod, deploy}
 ```
 
 ### Fluxo de bug
@@ -281,7 +283,7 @@ flowchart LR
     CC --> AG[explorer / revisor / tenant-auditor]
     CC --> REPO[(Repositorio)]
     HE -.->|nunca| REPO
-    HU -->|migracao, push, deploy| PROD[(Supabase prod / Vercel)]
+    HU -->|migracao, merge, deploy| PROD[(Supabase prod / Vercel)]
     CC -.->|nunca| PROD
 ```
 

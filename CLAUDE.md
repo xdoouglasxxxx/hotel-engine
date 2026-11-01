@@ -88,7 +88,7 @@ Toda sessao de trabalho comeca por `/proxima` (le `docs/milestones.md`, Estado a
 Antes de qualquer tarefa, ler o "Resumo em 12 linhas" de `docs/harness.md`.
 
 Proibicoes absolutas (resumo; detalhe no harness eixo 4, nas rules de `.claude/rules/` e nos hooks):
-- Nunca `git push`, `git reset --hard`, `--force` ou `--no-verify`.
+- Nunca push para `main`/`develop`, nunca `--force`, `git reset --hard` ou `--no-verify`. Push so como `git push [-u] origin <branch-de-trabalho>`; `gh pr create` (base `develop`) liberado; `gh pr merge` e merge em geral sao do humano.
 - Nunca `supabase db push`, `migration up --linked`, `psql` remoto, `vercel --prod` ou qualquer deploy; migracao e aplicada pelo humano.
 - Nunca ler `.env*` alem do `.env.example`; nunca imprimir chaves ou tokens; nunca service role no cliente.
 - Nunca editar `supabase/schema.sql` nem os `migration-*.sql` historicos; nunca policy `using (true)` nem desligar RLS.
@@ -108,7 +108,7 @@ Inegociaveis:
 Forma de trabalho:
 - Planejar antes de implementar (Plan mode). Um objetivo por sessao e por PR.
 - Upgrades grandes de framework ficam separados de qualquer mudanca funcional.
-- Commits pequenos (`feat:`, `fix:`, `chore:`, `docs:`, `db:`). Nunca push/force/reset --hard.
+- Commits pequenos (`feat:`, `fix:`, `chore:`, `docs:`, `db:`). Nunca push em main/develop, force ou reset --hard.
 - Mudancas de banco sempre via `/nova-migracao`, revisadas por mim. Os `supabase/*.sql`
   atuais sao snapshot historico: nao editar.
 - Antes de commitar mudanca em rotas, acesso a dados, middleware ou SQL: agente `revisor`.
