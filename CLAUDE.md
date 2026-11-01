@@ -192,3 +192,4 @@ Forma de trabalho:
 - 2026-10-31: historico do git recomecado em um unico commit (eeb1f07) para publicacao; o historico anterior ficou arquivado em privado. Hashes de commits citados em docs anteriores nao existem mais neste repositorio.
 - 2026-10-31: protecao remota de `develop` e `main` ativa (rulesets no GitHub; push direto recusado com GH013, testado pelo proprietario em 2026-10-31). E a barreira real do push; o hook `validate-bash.js` e defesa em profundidade.
 - 2026-10-31: agente pode `git push [-u] origin <branch-de-trabalho>` e `gh pr create` (base `develop`, texto via `--body-file`); merge, push em main/develop e demais `gh` seguem humanos (M0-16, PR #2 mergeado em 2026-11-01).
+- 2026-11-01: edicao de docs em lote por awk/sed e proibida ao agente; usar Edit por trecho e conferir `git diff --stat` (uma substituicao em lote apagou blocos do milestones.md sem erro visivel).

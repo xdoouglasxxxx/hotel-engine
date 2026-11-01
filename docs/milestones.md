@@ -7,7 +7,7 @@ Toda sessao do Claude Code comeca lendo "Estado atual" e "Fila do humano", e ter
 
 **O que e rigido (nao muda sem decisao registrada no CLAUDE.md):**
 - GATE (coluna Gate com D-algo aberto) e tarefa marcada `humano` so o humano marca. O agente para, escreve o que precisa, e segue para outra tarefa liberada em vez de esperar.
-- Aplicar migracao, `git push`, deploy, instalar dependencia e qualquer escrita em Supabase/Vercel sao do humano. O agente prepara ate o ponto imediatamente anterior.
+- Aplicar migracao, push para `develop`/`main`, merge de PR, deploy, instalar dependencia e qualquer escrita em Supabase/Vercel sao do humano. O agente prepara ate o ponto imediatamente anterior. Push de branch de trabalho (`git push [-u] origin <branch>`) e `gh pr create` (base `develop`) sao do agente (M0-16).
 - Rota, SQL, RLS, service role ou hook: `revisor` antes do commit, sem excecao. Tarefa assim sem veredito fica `[~]`, nunca `[x]`.
 - Um objetivo por commit. Uma sessao pode encadear varios commits (ver "lote"), mas cada commit tem um objetivo e, quando couber, o veredito do revisor no corpo.
 
@@ -33,22 +33,23 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 
 | Campo | Valor |
 |---|---|
-| Ultima atualizacao | 2026-11-01 (agente: M0-16 mergeada pelo humano (PR #2); PRs #3 (M1-09) e #4 (M6-02) abertos; branch final de docs a seguir; ver `docs/handoffs/2026-11-01-fila-de-aprovacao.md`) |
+| Ultima atualizacao | 2026-11-01 (agente: ajustes pos-noite em `chore/pos-noite-ajustes`; M0-16 aceita pelo humano) |
 | Milestones ativos | M0 (fechando) e M1 (em andamento, autorizado) |
-| Branch de trabalho | `docs/2026-11-01-noite-autonoma` (docs); PRs abertos: `chore/m1-09-fechamento`, `docs/m6-02-deploy-checklist` |
+| Branch de trabalho | `develop` (integracao; branches de trabalho saem dela) |
 | Modelo em uso | local `qwen3-coder-16k` certificado so para leitura/triagem; Sonnet/Fable para rotas, SQL, RLS, revisor, upgrades (ver harness, eixo 4) |
-| Lote sugerido para o agente | M1-12 (PWA, media); M4-02 e M4-06 (nao feitos na noite de 2026-10-31: contexto longo); M2-01 (plano, so documento, nao feito). M1-10 e gate humano |
+| Lote sugerido para o agente | M4-02 + M4-06 + M2-01 (M1-10 e gate humano) |
 | Bloqueios | nenhum de agente. Ressalvas medias do revisor movidas para M2-09 |
 
 ## Fila do humano (o que so voce destrava)
 
 | Prioridade | Item | Libera |
 |---|---|---|
-| 0 | Seguir `docs/handoffs/2026-11-01-fila-de-aprovacao.md`: conferir ruleset remoto, push e PR de cada branch na ordem sugerida; merge da M0-16 primeiro | M0-16, M1-09, M1-11, M6-02 |
-| 1 | Rodar `evals/sessao-zero.md` em sessao nova com Sonnet (veredito) e registrar; registrar tambem a rodada com `qwen3-coder-16k` como certificacao local | M0-07 |
-| 2 | Registrar D1 e D2 em `CLAUDE.md > Decisoes` (ja decididas no chat de 2026-10-30) | M0-15, fecha D1/D2 |
-| 3 | Renomear repo, Vercel e projeto prod para hotel-engine (M0-14) | M0-14, M6-04 |
-| 4 | Conferir o `.hermes.md` ajustado (o `docs/design/` movido ja foi commitado) | higiene |
+| 1 | Testar M1-11 no preview: reserva sintetica de nome `José & Ana #2`; aprovar, cancelar com motivo `100%` e rejeitar; conferir o texto no WhatsApp (passos em `docs/handoffs/2026-11-01-m1-11-whatsapp.md`) | M1-11 |
+| 2 | Rodar `evals/sessao-zero.md` em sessao nova com Sonnet (veredito) e registrar; registrar tambem a rodada com `qwen3-coder-16k` como certificacao local | M0-07 |
+| 3 | Preencher `docs/runbook.md` §1 e §4 a §6 (prod, rollback, incidente, observabilidade) | M6-02 |
+| 4 | Criar o projeto novo `hotel-engine` na Vercel so com Preview (sem Production) e renomear repo e projeto prod (M0-14) | M0-14, M6-04 |
+| 5 | Decidir o destino de Momentos/galeria (generica por tenant ou remover) e registrar em `CLAUDE.md > Decisoes` | M1-10 |
+| 6 | Conferir o `.hermes.md` ajustado (linha 11: push de branch de trabalho e PR permitidos ao delegar ao Claude Code) | higiene |
 
 ## Autorizacoes em pe
 
@@ -58,6 +59,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | 2026-10-30 | `npm install` do ESLint (M0-08) | so eslint e eslint-config-next; nenhuma outra dependencia |
 | 2026-10-31 | Commit local sem confirmacao (allowlist, M0-10) | push, deploy, migracao, dependencias seguem humanos; commit traz veredito do revisor quando a tarefa exigir |
 | 2026-10-31 | Protocolo v2: ordem flexivel, lotes, paralelismo entre milestones | respeitar deps duras (`!`), gates, revisor obrigatorio |
+| 2026-11-01 | Push de branch de trabalho e `gh pr create` pelo agente (M0-16) | so `git push [-u] origin <branch-de-trabalho>` e `gh pr create --base develop --body-file`; nunca main/develop, force, `gh pr merge`/`gh api`; merge e do humano; rulesets remotos ativos (GH013 testado) |
 
 ---
 
@@ -98,7 +100,7 @@ Criterio de saida: `test-hooks` verde; `/verificar` roda typecheck+lint; sessao-
 | M0-13 | Varredura final de acoplamento (marca, geo, imagens, dominio, package name) | M0-04 | — | inventario 03 zerado ou movido para M1 | [~] | boa parte ja coberta por M1-04/M1-08; restam package name (M0-14) e icones |
 | M0-14 | Renomear repo, package, Vercel e prod para hotel-engine; .gitattributes | M0-13 | — | *agente:* package.json, .gitattributes, referencias em .claude/ docs/ scripts/; *humano:* repo, Vercel, prod | [ ] | *agente feito 2026-10-31* (package.json/lock, .gitattributes, PDF renomeado); falta *humano* (fila 3); producao v1.0 da Vercel protegida em 2026-10-31 (All Deployments); ao renomear, conferir variaveis de producao (so nomes) e decidir se os deploys antigos de producao sao apagados |
 | M0-15 | GATE: registrar D1 e D2 em CLAUDE.md | — | D1, D2 | linhas presentes | [x] | humano na fila (2) |
-| M0-16 | Push para branches de trabalho e PR pelo agente; hook permite so `git push origin <branch nao protegida>`; `gh pr create` liberado, `gh pr merge` bloqueado | M0-10! | — | test-hooks verde com os casos de push; revisor APROVADO | [h] | mergeada pelo humano em 2026-11-01 (PR #2); rulesets ativos em develop e main (gate cumprido; push direto recusado com GH013, testado pelo humano); revisor 2a rodada APROVADO COM RESSALVAS (restam falsos positivos de leitura e `git send-pack`, baixos); `.hermes.md` linha 11 ainda proibe push (fila do humano) |
+| M0-16 | Push para branches de trabalho e PR pelo agente; hook permite so `git push origin <branch nao protegida>`; `gh pr create` liberado, `gh pr merge` bloqueado | M0-10! | — | test-hooks verde com os casos de push; revisor APROVADO | [x] | aceita pelo humano em 2026-11-01 (PR #2 mergeado; rulesets ativos em develop e main, push direto recusado com GH013, testado); *agente 2026-10-31:* hook, settings, test-hooks 169 casos FALHAS: 0, docs; revisor 2a rodada APROVADO COM RESSALVAS (achado medio de alias via `git -c` corrigido depois; restam falsos positivos de leitura e `git send-pack`, baixos); `.hermes.md` linha 11 ajustada em `chore/pos-noite-ajustes` |
 | M0-17 | Fontes locais: trocar `next/font/google` por `next/font/local` (build sem rede externa) | — | — | build local passa; typecheck ok; layout sem import de `next/font/google` | [x] | 2026-10-31, branch `fix/fontes-locais`; origem: falha intermitente do build na Vercel; harness eixo 3 |
 
 ## M1 · Configuracao do hotel por tenant (site_settings)
