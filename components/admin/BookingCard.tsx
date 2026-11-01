@@ -40,23 +40,24 @@ export function BookingCard({ booking, roomName, onUpdate, compact = false }:
       // WhatsApp automático: abre a conversa já com a mensagem pronta
       const cancelLink = siteUrlFor(settings) + '/cancelar/' + booking.id + '?t=' + booking.cancel_token;
       const msg = path === 'approve'
-        ? 'Olá, ' + booking.guest_name + '! Sua reserva' + hotel + ' foi CONFIRMADA. ✅%0A' +
-          '• ' + roomName + '%0A' +
-          '• Entrada: ' + formatDateBR(booking.check_in) + checkinNote + '%0A' +
-          '• Saída: ' + formatDateBR(booking.check_out) + checkoutNote + '%0A' +
-          '• Total: ' + brl(booking.total_price) + '%0A' +
-          'Se seus planos mudarem, você pode cancelar por aqui: ' + encodeURIComponent(cancelLink) + '%0A' +
+        ? 'Olá, ' + booking.guest_name + '! Sua reserva' + hotel + ' foi CONFIRMADA. ✅\n' +
+          '• ' + roomName + '\n' +
+          '• Entrada: ' + formatDateBR(booking.check_in) + checkinNote + '\n' +
+          '• Saída: ' + formatDateBR(booking.check_out) + checkoutNote + '\n' +
+          '• Total: ' + brl(booking.total_price) + '\n' +
+          'Se seus planos mudarem, você pode cancelar por aqui: ' + cancelLink + '\n' +
           'Qualquer dúvida, estou à disposição. Até breve!'
         : path === 'cancel'
         ? 'Olá, ' + booking.guest_name + '. Precisamos CANCELAR sua reserva' + hotel + ' ' +
-          '(' + roomName + ', ' + formatDateBR(booking.check_in) + ' a ' + formatDateBR(booking.check_out) + '). ❌%0A' +
-          (reason ? 'Motivo: ' + encodeURIComponent(reason) + '%0A' : '') +
+          '(' + roomName + ', ' + formatDateBR(booking.check_in) + ' a ' + formatDateBR(booking.check_out) + '). ❌\n' +
+          (reason ? 'Motivo: ' + reason + '\n' : '') +
           'Pedimos desculpas pelo transtorno. Se quiser, posso ajudar a remarcar para outras datas. ' +
           'Por favor, confirme o recebimento desta mensagem. 🙏'
         : 'Olá, ' + booking.guest_name + '. Infelizmente não temos disponibilidade para as datas ' +
           formatDateBR(booking.check_in) + ' a ' + formatDateBR(booking.check_out) +
           hotel + '. Posso sugerir outras datas ou acomodações?';
-      window.open('https://wa.me/' + booking.guest_phone.replace(/\D/g, '').replace(/^(?!55)/, '55') + '?text=' + msg, '_blank');
+      // waLink codifica o texto uma unica vez (UTF-8); nao pre-codificar partes da mensagem.
+      window.open(waLink(booking.guest_phone.replace(/\D/g, '').replace(/^(?!55)/, '55'), msg), '_blank');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Erro.');
     } finally {
@@ -90,7 +91,7 @@ export function BookingCard({ booking, roomName, onUpdate, compact = false }:
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <a
-          href={waLink(booking.guest_phone.replace(/^(?!55)/, '55'), 'Olá, ' + booking.guest_name + '!')}
+          href={waLink(booking.guest_phone.replace(/\D/g, '').replace(/^(?!55)/, '55'), 'Olá, ' + booking.guest_name + '!')}
           target="_blank" rel="noopener noreferrer"
           className="rounded-full border border-emerald-600 px-4 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-50"
         >
