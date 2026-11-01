@@ -227,6 +227,7 @@ A maquina onde o agente roda nunca contem segredo de producao. Segredos de dev s
 | 2026-10-31 | `git switch -f`, `git stash drop/clear` passam pelos wildcards | baixo impacto: so trabalho local nao commitado | protocolo: commit por objetivo ao fim de cada lote | revisar se houver perda de trabalho |
 | 2026-10-31 | `@eslint/eslintrc` usado via dependencia transitiva, nao declarado no `package.json` | o upgrade do Next (M0-11) troca o ESLint | anotado em M0-11 | M0-11 |
 | 2026-10-31 | timeout do typecheck no `stop-verify` e tratado como falha | melhor falhar fechado | mensagem distingue timeout (commit extra) | nenhum |
+| 2026-11-01 | edicao de docs em lote por `awk`/`sed` e proibida ao agente; usar Edit por trecho | uma substituicao em lote apagou blocos de `docs/milestones.md` sem erro visivel (caminho do `$TEMP` do Windows mal interpretado pelo `awk`) | revisar o diff antes de commitar; Edit falha alto quando o trecho nao casa; `git diff --stat` conferido apos cada edicao de docs | primeiro incidente |
 | 2026-10-31 | hook de `.env` e heuristico; expansao de shell (brace, glob, subshell) pode contornar | regex nao fecha expansao | dano limitado: a maquina do agente so tem chaves do projeto dev com dado sintetico; chaves de prod vivem apenas na Vercel; apos qualquer suspeita, reset das chaves do dev | revisar se surgir restricao de filesystem viavel |
 
 ---
@@ -296,7 +297,7 @@ flowchart LR
 | P1 | `.hermes.md` na raiz + `config.yaml` com `write_approval` e toolsets desligados | 4, 5 | fechado. `.hermes.md` commitado; `config.yaml` com 10 toolsets desligados, memory/skills `write_approval: true`; 6 testes de integracao em 2026-10-29 (delegacao, hook via delegacao, recusa a `.env`). Ajustes pos-teste aplicados ao `.hermes.md` | 2026-10-29 |
 | P1 | Secao "Precedencia" copiada para o `CLAUDE.md` (ou ponteiro para este arquivo) | 5 | fechado. `CLAUDE.md` §6 aponta para `docs/harness.md`; arquivo movido para ca (`git mv`) em 2026-10-29 | 2026-10-29 |
 | P1 | Decisao registrada: dev/prod separados no Supabase; humano aplica migracao | 3, 4 | fechado. `CLAUDE.md` > Decisoes (2 linhas) e §9 | 2026-10-29 |
-| P1 | Decisao sobre testes da aplicacao (sem / com qual framework e camada) | 3 | aberto. Duas opcoes com estimativa em horas apresentadas no relato de 2026-10-29; humano decide | 2026-10-29 |
+| P1 | Decisao sobre testes da aplicacao (sem / com qual framework e camada) | 3 | fechado em 2026-10-29 (D0): sem testes automatizados por ora; reavaliar antes da 1a reserva real ou do M2 (`CLAUDE.md` > Decisoes; M4-10) | 2026-10-29 |
 | P1 | `CLAUDE.md` §5 comandos sincronizado com `package.json`; §9 com ambientes dev/prod | 2, 3 | fechado. §5 lista exatamente os 5 scripts (`typecheck` existe); §9 com dev/prod e `[PREENCHER]` nos nomes dos projetos | 2026-10-29 |
 | P1 | Upgrade de dependencias com CVEs: next 14.2.35 (fim da linha 14; correcoes exigem major, com react 19), zod 3.25.76 (<4.6.6, exige v4), eslint-config-next; postcss/glob vem de carona. Branch propria, sem --force, com /verificar, /smoke-test e revisor; zod em PR separado. Prazo: antes do primeiro deploy publico. | 3 | aberto. npm audit 2026-10-29: 6 vulns (5 high, 1 critical) | 2026-10-29 |
 | P1 | Varredura de acoplamento ao cliente anterior, incluindo nomes de pessoas em depoimentos e menção ao proprietario no codigo-fonte | 1, 4 | aberto. Ambiente dev validado em 2026-10-29 (site e admin); inventario em docs/analysis/03 | 2026-10-29 |
@@ -307,6 +308,7 @@ flowchart LR
 | P2 | Inventario de MCPs/integracoes antes de ligar qualquer uma | 4 | aberto. Candidatas listadas em `docs/claude-code/README.md`; nenhuma ligada; sem `.mcp.json` | 2026-10-29 |
 | P2 | `scripts/test-hooks.js` rodando em job agendado (Hermes) ou pre-commit | 3 | fechado (script). `scripts/test-hooks.js` existe; 37 casos, FALHAS: 0 em 2026-10-29. Agendamento via Hermes/pre-commit fica para quando `.hermes.md` existir | 2026-10-29 |
 | P3 | `docs/analysis/README.md` como indice | 2 | fechado | 2026-10-29 |
-| P3 | Checklist de deploy como `/deploy-checklist` (so leitura, imprime os 5 passos) | 3 | entregue na branch `docs/m6-02-deploy-checklist` (aguarda merge); `docs/runbook.md` inicial junto | 2026-10-31 |
+| P3 | Checklist de deploy como `/deploy-checklist` (so leitura, imprime os 5 passos) | 3 | fechado em M6-02 (PR #4, `.claude/commands/deploy-checklist.md` e `docs/runbook.md` inicial) | 2026-11-01 |
+| P1 | Push de branch de trabalho e `gh pr create` pelo agente, com develop/main protegidas (M0-16) | 1, 4 | fechado em 2026-11-01. PR #2 mergeado; rulesets ativos (GH013 testado pelo humano); hook `validate-bash.js` como defesa em profundidade | 2026-11-01 |
 
-Atualize esta tabela quando um item fechar. Data da ultima revisao: 2026-10-29.
+Atualize esta tabela quando um item fechar. Data da ultima revisao: 2026-11-01.
