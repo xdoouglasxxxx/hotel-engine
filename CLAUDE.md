@@ -7,14 +7,16 @@ unica pousada de 6 unidades. O hospede escolhe acomodacao e datas, envia uma pre
 O banco impede overbooking por constraint.
 
 **Objetivo**: transformar isso em produto multi-tenant (tenant -> propriedades -> quartos),
-comercializavel para varios hoteis. Sou o proprietario do codigo. O banco original foi
+comercializavel para varios hoteis. Desde 2026-11-01 o produto e vendido e medido por resultado
+(reservas diretas confirmadas e pagas), com pilotos em instancia por cliente (T0-T2); o multi-tenant
+fica para a fase T3 (ver `docs/architecture-v2.md` e `docs/strategy/product-strategy-v1.md`). Sou o proprietario do codigo. O banco original foi
 perdido; o dev foi recriado em 2026-10-29 (ver §9).
 
 **Estado (2026-11-01)**: fundacao (harness, hooks, ambiente dev, fontes locais, push e PR pelo agente)
 concluida; M1 (configuracao do hotel por tenant) aceito; M4-02 (busca de disponibilidade) mergeado na
 `develop`. Ainda sem testes automatizados; CI (typecheck, lint, test-hooks) em preparo no M0-18.
 Ambiente de desenvolvimento e projeto Supabase dev: ver §9. Ainda NAO estamos fazendo multi-tenancy
-(M2). Progresso e proxima entrega: `docs/milestones.md`. Diagnostico completo em `docs/analysis/` — leia
+(M2; adiado para T3 pela estrategia de 2026-11-01). Progresso e proxima entrega: `docs/milestones.md`. Diagnostico completo em `docs/analysis/` — leia
 `00-perguntas-em-aberto.md` antes de propor arquitetura; `01-diagnostico-execucao.md` §8 e
 o plano de reanimacao.
 
@@ -152,6 +154,7 @@ Forma de trabalho:
 | dev | hotel-engine-dev (South America / Sao Paulo, sa-east-1) | Free (pausa apos 7 dias sem uso; restaurar no dashboard antes de trabalhar, incluindo `build`/`smoke-test`) | desenvolvimento local, Claude Code, aplicacao de migracoes de teste | `.env.local` (criado pelo humano; o agente nunca le o conteudo) |
 | prod | inexistente ate o M6-01 (criado pelo humano; nome a definir: [PREENCHER]) | Free por D5, com keep-alive (M6-01a) e dump semanal (M6-01b) | producao | somente nas variaveis de ambiente do projeto na Vercel; nunca em `.env.local` nem no repositorio |
 
+- Pilotos (T0-T2, a partir de 2026-11-01): cada piloto tem seu proprio projeto Supabase e projeto Vercel (instancia por cliente, D11); `hotel-engine-dev` e a "pousada zero"; segredos de cada piloto so nas variaveis da Vercel/Supabase dele; migracoes aplicadas pelo humano na ordem dev -> piloto 1 -> 2 -> 3 (`schema_version`; runbook em T0-A02).
 - Hospedagem: Vercel, plano Hobby, ligada ao GitHub: preview automatico por branch e por PR. Projeto atual: [PREENCHER nome do projeto Vercel anterior], que sera substituido pelo projeto novo `hotel-engine` (a criar pelo humano, so com Preview e sem Production; M0-14), com Production Branch = `main` (congelada ate o M6). CI de PR: GitHub Actions (M0-18), sem secrets e sem deploy. O deploy de producao de 11 de julho (v1.0, codigo original, `main`) foi tirado do acesso publico em 2026-10-31 com Deployment Protection "All Deployments"; os deploys antigos continuam na Vercel.
 - Migracoes: Claude escreve o arquivo em `supabase/migrations/`; o humano aplica no dev, testa pela
   interface e so depois aplica no prod (fora de horario de reserva). Deploy na Vercel e feito pelo
@@ -213,3 +216,14 @@ Forma de trabalho:
 - 2026-11-01: M1-10 resolvido: Momentos vira "Galeria do hotel", generica por tenant.
 - 2026-11-01: edicao de docs em lote por awk/sed e proibida ao agente; usar Edit por trecho e conferir `git diff --stat` (uma substituicao em lote apagou blocos do milestones.md sem erro visivel).
 - 2026-11-01: modelos locais removidos do projeto e do harness; Claude Code somente em Sonnet/Fable; D9 revogada
+- 2026-11-01: modelo comercial hibrido: base por unidade + 5% sobre reservas diretas confirmadas; garantia de 60 dias; preco explicado em comissao economizada (D10).
+- 2026-11-01: fase de pilotos T0-T2 em instancia por cliente (1 projeto Supabase + 1 projeto Vercel por pousada); multi-tenant (M2) adiado para T3; D6 reaberta apenas para o piloto (D11).
+- 2026-11-01: 3 pilotos com trafego proprio; hotel-engine-dev e a "pousada zero" de desenvolvimento.
+- 2026-11-01: gateway Pix = Mercado Pago (link de pagamento + webhook), sandbox primeiro; D7 fechada.
+- 2026-11-01: WhatsApp semi-automatico em T1 (agente redige, humano envia); API oficial via provedor em T2; D8 ajustada.
+- 2026-11-01: posicionamento e outcome principal conforme `docs/strategy/product-strategy-v1.md` secao 5 (reservas diretas confirmadas e pagas, resposta em menos de 2 min, zero overbooking).
+- 2026-11-01: `awaiting_deposit` bloqueia a data com prazo (`expires_at`, configuravel em `booking_policy`); `no_double_booking` cobre `awaiting_deposit` e `confirmed`; `pending` nao bloqueia; expiracao por job (D12; `docs/architecture-v2.md` secao B).
+- 2026-11-01: `concierge_profile` e `commercial_terms` em tabelas proprias com RLS so admin; `webhook_receipts` propria para idempotencia (D16).
+- 2026-11-01: retencao do concierge: T1 nao guarda texto de hospede; T2 guarda texto mascarado por 30 dias com expurgo; telefone como hash na conversa, em claro so em `bookings` (D13).
+- 2026-11-01: jobs agendados por `pg_cron` + `pg_net` com `CRON_SECRET` (padrao), GitHub Actions `schedule` como alternativa; Vercel Cron so para diarios (D14).
+- 2026-11-01: agentes em runtime (concierge) sao codigo de produto, com secao propria no harness (a aplicar em T0-B); segredos por instancia so nas variaveis da Vercel/Supabase; excecao registrada para o modelo ler texto mascarado de hospede; runbook de migracoes em N instancias; webhooks e crons entram na matriz como "API/rota" com revisor (D15).
