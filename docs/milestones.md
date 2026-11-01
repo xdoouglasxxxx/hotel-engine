@@ -33,11 +33,11 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 
 | Campo | Valor |
 |---|---|
-| Ultima atualizacao | 2026-10-31 (agente: lote M0 em `chore/m0-higiene` e merge da develop; humano aceitou M1-05/06/07/08 no preview da Vercel) |
+| Ultima atualizacao | 2026-10-31 (agente: M0-16 em `chore/m0-16-push-branches`; push e PR deste primeiro sao do humano; hook libera push so depois do merge dele) |
 | Milestones ativos | M0 (fechando) e M1 (em andamento, autorizado) |
-| Branch de trabalho | `chore/m0-higiene` (PR #2 contra `develop`) |
+| Branch de trabalho | `chore/m0-16-push-branches` (a partir de `develop`; sem push) |
 | Modelo em uso | local `qwen3-coder-16k` certificado so para leitura/triagem; Sonnet/Fable para rotas, SQL, RLS, revisor, upgrades (ver harness, eixo 4) |
-| Lote sugerido para o agente | M1-09 (fechamento do M1); M1-11 (baixa) quando houver folga; M1-10 e gate humano |
+| Lote sugerido para o agente | M1-09 em `chore/m1-09-fechamento` (depois do merge do M0-16); M1-11 (baixa) quando houver folga; M1-10 e gate humano |
 | Bloqueios | nenhum de agente. Ressalvas medias do revisor movidas para M2-09 |
 
 ## Fila do humano (o que so voce destrava)
@@ -97,7 +97,7 @@ Criterio de saida: `test-hooks` verde; `/verificar` roda typecheck+lint; sessao-
 | M0-13 | Varredura final de acoplamento (marca, geo, imagens, dominio, package name) | M0-04 | — | inventario 03 zerado ou movido para M1 | [~] | boa parte ja coberta por M1-04/M1-08; restam package name (M0-14) e icones |
 | M0-14 | Renomear repo, package, Vercel e prod para hotel-engine; .gitattributes | M0-13 | — | *agente:* package.json, .gitattributes, referencias em .claude/ docs/ scripts/; *humano:* repo, Vercel, prod | [ ] | *agente feito 2026-10-31* (package.json/lock, .gitattributes, PDF renomeado); falta *humano* (fila 3); producao v1.0 da Vercel protegida em 2026-10-31 (All Deployments); ao renomear, conferir variaveis de producao (so nomes) e decidir se os deploys antigos de producao sao apagados |
 | M0-15 | GATE: registrar D1 e D2 em CLAUDE.md | — | D1, D2 | linhas presentes | [x] | humano na fila (2) |
-| M0-16 | Push para branches de trabalho e PR pelo agente; hook permite so `git push origin <branch nao protegida>`; `gh pr create` liberado, `gh pr merge` bloqueado | M0-10! | GATE: branch protection feita pelo humano | test-hooks verde com os casos de push; revisor APROVADO | [ ] | pre-requisito: develop e main protegidas no GitHub |
+| M0-16 | Push para branches de trabalho e PR pelo agente; hook permite so `git push origin <branch nao protegida>`; `gh pr create` liberado, `gh pr merge` bloqueado | M0-10! | — | test-hooks verde com os casos de push; revisor APROVADO | [~] | *agente feito 2026-10-31* (hook, settings, test-hooks 169 casos FALHAS: 0, docs); revisor 2a rodada APROVADO COM RESSALVAS (achado medio de alias via `git -c` corrigido depois; restam falsos positivos de leitura e `git send-pack`, baixos); falta *humano*: push e PR deste, merge. Rulesets ativos em develop e main (gate cumprido). `.hermes.md` linha 11 ainda proibe push (fila do humano) |
 | M0-17 | Fontes locais: trocar `next/font/google` por `next/font/local` (build sem rede externa) | — | — | build local passa; typecheck ok; layout sem import de `next/font/google` | [x] | 2026-10-31, branch `fix/fontes-locais`; origem: falha intermitente do build na Vercel; harness eixo 3 |
 
 ## M1 · Configuracao do hotel por tenant (site_settings)
