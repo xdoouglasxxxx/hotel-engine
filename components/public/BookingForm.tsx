@@ -16,11 +16,12 @@ import { useSiteSettings } from './SiteSettingsProvider';
 
 type Step = 'dates' | 'details' | 'done';
 
-export function BookingForm({ room, onDone }: { room: Room; onDone: () => void }) {
+export function BookingForm({ room, onDone, initialRange }:
+  { room: Room; onDone: () => void; initialRange?: DateRange }) {
   const settings = useSiteSettings();
   const phone = contactPhone(settings);
   const hostName = settings?.name ?? 'A hospedagem';
-  const [range, setRange] = useState<DateRange | undefined>();
+  const [range, setRange] = useState<DateRange | undefined>(initialRange);
   const [occupied, setOccupied] = useState<Date[]>([]);
   const [loadingCal, setLoadingCal] = useState(true);
   const [step, setStep] = useState<Step>('dates');
