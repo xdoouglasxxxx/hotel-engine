@@ -203,4 +203,4 @@ Forma de trabalho:
 - 2026-11-01: runtime Node 22 LTS fixado em `engines`; Next 15 depois do M0-11.
 - 2026-11-01: M1-10 resolvido: Momentos vira "Galeria do hotel", generica por tenant.
 - 2026-11-01: edicao de docs em lote por awk/sed e proibida ao agente; usar Edit por trecho e conferir `git diff --stat` (uma substituicao em lote apagou blocos do milestones.md sem erro visivel).
-- 2026-11-01: modelos locais removidos do projeto por decisao maior do proprietario; Claude Code (Sonnet/Fable) e o unico modelo, para todas as classes de tarefa.
+- 2026-11-01: modelos locais removidos do projeto e do harness; Claude Code somente em Sonnet/Fable; D9 revogada

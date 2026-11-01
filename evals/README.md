@@ -2,6 +2,10 @@
 
 Provam que as camadas do harness (rules, skills, agentes) produzem o comportamento esperado. Nao sao testes da aplicacao. Todo dado aqui e sintetico.
 
+## Modelo (decisao de 2026-11-01)
+
+Os evals rodam com o Claude Code em Sonnet (padrao do projeto). A certificacao de modelo local deixa de existir: modelos locais foram removidos do projeto (`docs/harness.md`, eixo 4, politica de modelo). Rodada registrada com modelo local, se houver nas tabelas "Execucoes", fica como historico e deve ser marcada "modelo local, descontinuado"; nao conta como veredito.
+
 ## Protocolo padrao (definido em 2026-10-30)
 
 Todo caso passa por duas etapas. A triagem e automatizada e barata de repetir; o veredito e manual.

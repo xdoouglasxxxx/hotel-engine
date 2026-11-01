@@ -125,7 +125,7 @@
 | Código-fonte (todos os `.ts/.tsx/.sql/.json/.mjs`) | — | **Nenhum segredo.** Chaves só via `process.env`. |
 | `.env.example` | arquivo de exemplo de variáveis | **[INCERTO]** Leitura bloqueada pela política do ambiente. Varredura por padrão (sem exibir) encontrou na linha 9 um valor com formato de telefone; não foi possível confirmar se as demais linhas têm placeholders ou valores reais. |
 | `public/google7ba4df3e37ceb4f9.html` | token de verificação Search Console | Baixa sensibilidade, mas vinculado à conta Google do cliente; remover. |
-| `.claude/settings.local.json.off` | config local desativada com endpoint/modelo local | Ignorado pelo git; contém um token de placeholder, não uma credencial real. Não versionar. |
+| `.claude/settings.local.json.off` | config local desativada com endpoint alternativo | Ignorado pelo git; contém um token de placeholder, não uma credencial real. Não versionar. |
 
 ## 7. (F) Dados pessoais reais — mascarados
 

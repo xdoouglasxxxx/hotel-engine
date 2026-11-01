@@ -36,7 +36,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | Ultima atualizacao | 2026-11-01 (agente: M4-02 em `feat/m4-02-busca-disponibilidade`, aguardando verificacao do humano) |
 | Milestones ativos | M0 (fechando) e M1 (em andamento, autorizado) |
 | Branch de trabalho | `develop` (integracao; branches de trabalho saem dela) |
-| Modelo em uso | Sonnet/Fable para todas as classes de tarefa (ver CLAUDE.md > Decisoes) |
+| Modelo em uso | Sonnet (padrao) / Fable |
 | Lote sugerido para o agente | M4-06, depois M2-01 (M4-02 entregue em `[h]`; M0-11 depende de aprovacao humana de dependencia) |
 | Bloqueios | nenhum de agente. Ressalvas medias do revisor movidas para M2-09 |
 
@@ -77,7 +77,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | D6 | SaaS ou instancia por cliente | fechada 2026-11-01 (CLAUDE.md) | SaaS multi-tenant em um deploy | — |
 | D7 | Gateway de pagamento (qual) | fechada 2026-11-01 (CLAUDE.md) | decidido em M4-03; padrao Mercado Pago, alternativa Asaas | — |
 | D8 | Provedor de e-mail/WhatsApp | fechada 2026-11-01 (CLAUDE.md) | e-mail Resend em M4-01; WhatsApp manual via wa.me ate o M5 | — |
-| D9 | Politica de modelo: classes de tarefa x modelo minimo | decidida 2026-10-31 (harness, eixo 4) | Claude Code (Sonnet/Fable) para todas as classes; modelos locais removidos em 2026-11-01 | — |
+| D9 | Politica de modelo: classes de tarefa x modelo minimo | revogada 2026-11-01 (CLAUDE.md > Decisoes) | Claude Code somente em Sonnet (padrao) ou Fable; sem classes de tarefa x modelo | — |
 
 ---
 
@@ -201,7 +201,6 @@ Criterio de saida: deploy pelo humano via /deploy-checklist; /smoke-test contra 
 Rode `/proxima`. Texto de referencia (`.claude/commands/proxima.md`):
 
 ```
-Leia docs/milestones.md ("Estado atual", "Fila do humano", "Autorizacoes em pe" e as tabelas dos milestones ativos), depois docs/harness.md (Resumo em 12 linhas). Confira o modelo em uso e se ele e permitido para a classe da tarefa (harness, eixo 4).
-Monte o LOTE da sessao: uma ou mais tarefas [ ] com dependencias duras (!) em [x], gate fechado, mesma branch, sem migracao entre elas. Se preferir uma ordem diferente da tabela, diga por que. Se a unica opcao for GATE ou tarefa do humano, liste o que precisa dele e pare.
+Leia docs/milestones.md ("Estado atual", "Fila do humano", "Autorizacoes em pe" e as tabelas dos milestones ativos), depois docs/harness.md (Resumo em 12 linhas).Monte o LOTE da sessao: uma ou mais tarefas [ ] com dependencias duras (!) em [x], gate fechado, mesma branch, sem migracao entre elas. Se preferir uma ordem diferente da tabela, diga por que. Se a unica opcao for GATE ou tarefa do humano, liste o que precisa dele e pare.
 Escreva o prompt do lote nos sete blocos (docs/produto-e-roadmap.md, secao 4), com Contexto obrigatorio apontando para as pranchas em docs/design/exports/ quando houver, e me mostre ANTES de executar. Apos minha confirmacao: execute, um commit por objetivo, revisor onde o protocolo exige, atualize milestones.md (status, fila do humano, estado atual) e entregue o relato.
 ```
