@@ -48,11 +48,11 @@ Se um hook bloqueia caso legitimo repetidamente, ele sobe (hook -> rule com cont
 | Procedimento | Quando X acontece, em que ordem faco? | `.claude/skills/` | `desenvolver-feature`, `investigar-bug` (e demais skills do projeto) |
 | Acao repetivel | Qual tarefa mecanica rodo com um comando? | `.claude/commands/` | `/proxima`, `/nova-migracao`, `/verificar`, `/smoke-test`, `/varrer-acoplamento` |
 | Perspectiva | Quem revisa com outros olhos e menos poder? | `.claude/agents/` | `explorer`, `revisor`, `tenant-auditor` |
-| Observabilidade | Onde vejo o que aconteceu em dev/prod? | `CLAUDE.md` secao Deploy | Logs Supabase (dashboard), logs Vercel, Realtime. **[FALTA, P2]** documentar onde e quem acessa |
+| Observabilidade | Onde vejo o que aconteceu em dev/prod? | `CLAUDE.md` secao Deploy | Logs Supabase (dashboard), logs Vercel, Realtime. **[parcial, P2]** falta o humano informar quem acessa os dashboards e a retencao (tabela de pendencias; `docs/runbook.md` §6) |
 | Enforcement | O que vale mesmo se o modelo errar? | `.claude/hooks/` | `validate-bash.js`, `post-edit.js`, `settings.json` |
 | Verificacao | Como provo que as camadas funcionam? | `scripts/`, comandos, `evals/`, `.claude/workflows/` | `test-hooks.js`, `/verificar`, `/smoke-test`, `evals/README.md` (protocolo), `.claude/workflows/eval-sessao-zero.js` (triagem) |
 | Estado aberto | O que ainda nao foi decidido ou feito? | `docs/analysis/`, `docs/milestones.md` | `00-perguntas-em-aberto.md`, "Pendencias" dos relatos, `docs/milestones.md` (fonte de progresso: Estado atual) |
-| Memoria e orquestracao | O que persiste entre sessoes e quem encadeia tarefas? | Hermes | `.hermes.md` **[FALTA, P1]** |
+| Memoria e orquestracao | O que persiste entre sessoes e quem encadeia tarefas? | Hermes | `.hermes.md` (existe; M0-02 concluida) |
 
 ### Divisao com o `CLAUDE.md`
 
@@ -84,7 +84,7 @@ Quando uma dessas secoes estiver vazia ou desatualizada, isso e uma pendencia do
 
 - **Um editor por vez.** Nunca dois agentes com permissao de escrita no mesmo repo ao mesmo tempo.
 - **Uma sessao, um objetivo.** Feature e bug nao compartilham sessao; `/clear` entre eles.
-- **Handoff e escrito, nunca lembrado.** Tarefa que nao fecha na sessao deixa `docs/handoffs/AAAA-MM-DD-<tarefa>.md` com o relato no formato das skills (objetivo, arquivos, passos pulados, verificado/nao verificado, pendencias, [INCERTO]/[INFERIDO]). **[FALTA, P2]** criar a pasta e o template.
+- **Handoff e escrito, nunca lembrado.** Tarefa que nao fecha na sessao deixa `docs/handoffs/AAAA-MM-DD-<tarefa>.md` com o relato no formato das skills (objetivo, arquivos, passos pulados, verificado/nao verificado, pendencias, [INCERTO]/[INFERIDO]). `docs/handoffs/` e `TEMPLATE.md` existem.
 
 ---
 
@@ -103,7 +103,7 @@ Quando uma dessas secoes estiver vazia ou desatualizada, isso e uma pendencia do
 
 ### Navegacao
 
-- **[FALTA, P3]** `docs/analysis/README.md`: uma linha por arquivo dizendo qual pergunta ele responde, para `explorer` e skills lerem so o necessario.
+- `docs/analysis/README.md` (existe): uma linha por arquivo dizendo qual pergunta ele responde, para `explorer` e skills lerem so o necessario.
 - Referencias a codigo sao por **nome** (`create policy`, `no_double_booking`), nunca por numero de linha.
 
 ---
@@ -147,7 +147,7 @@ Quando rodar: triagem apos qualquer mudanca no harness, nas rules, nas skills ou
 veredito manual antes de dar a mudanca por concluida e apos corrigir uma triagem reprovada.
 Casos de skills e agentes ainda rodam so na etapa manual; estender a triagem a eles e pendencia (P3).
 
-### Testes da aplicacao **[FALTA, P1 — decisao]**
+### Testes da aplicacao **[decisao D0 fechada em 2026-10-29: sem testes por ora; reavaliar antes da 1a reserva real ou do M2 — a tabela de pendencias ainda mostra "aberto" e deve ser atualizada pelo humano]**
 
 O harness prova o harness; nao substitui testes do app. Hoje o `revisor` reporta "nao ha testes" em toda revisao.
 Decidir e registrar em `CLAUDE.md` > Decisoes: (a) sem testes automatizados por ora, `/smoke-test` manual e o minimo;
@@ -305,6 +305,6 @@ flowchart LR
 | P2 | Inventario de MCPs/integracoes antes de ligar qualquer uma | 4 | aberto. Candidatas listadas em `docs/claude-code/README.md`; nenhuma ligada; sem `.mcp.json` | 2026-10-29 |
 | P2 | `scripts/test-hooks.js` rodando em job agendado (Hermes) ou pre-commit | 3 | fechado (script). `scripts/test-hooks.js` existe; 37 casos, FALHAS: 0 em 2026-10-29. Agendamento via Hermes/pre-commit fica para quando `.hermes.md` existir | 2026-10-29 |
 | P3 | `docs/analysis/README.md` como indice | 2 | fechado | 2026-10-29 |
-| P3 | Checklist de deploy como `/deploy-checklist` (so leitura, imprime os 5 passos) | 3 | aberto | 2026-10-29 |
+| P3 | Checklist de deploy como `/deploy-checklist` (so leitura, imprime os 5 passos) | 3 | entregue na branch `docs/m6-02-deploy-checklist` (aguarda merge); `docs/runbook.md` inicial junto | 2026-10-31 |
 
 Atualize esta tabela quando um item fechar. Data da ultima revisao: 2026-10-29.
