@@ -33,17 +33,18 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 
 | Campo | Valor |
 |---|---|
-| Ultima atualizacao | 2026-11-01 (agente: ajustes pos-noite em `chore/pos-noite-ajustes`; M0-16 aceita pelo humano) |
+| Ultima atualizacao | 2026-11-01 (agente: M4-02 em `feat/m4-02-busca-disponibilidade`, aguardando verificacao do humano) |
 | Milestones ativos | M0 (fechando) e M1 (em andamento, autorizado) |
 | Branch de trabalho | `develop` (integracao; branches de trabalho saem dela) |
 | Modelo em uso | Sonnet/Fable para todas as classes de tarefa (ver CLAUDE.md > Decisoes) |
-| Lote sugerido para o agente | M4-02 + M4-06 + M2-01 (M1-10 e gate humano) |
+| Lote sugerido para o agente | M4-06, depois M2-01 (M4-02 entregue em `[h]`; M0-11 depende de aprovacao humana de dependencia) |
 | Bloqueios | nenhum de agente. Ressalvas medias do revisor movidas para M2-09 |
 
 ## Fila do humano (o que so voce destrava)
 
 | Prioridade | Item | Libera |
 |---|---|---|
+| 0 | Testar M4-02 em localhost/preview: escolher datas, conferir total e estados, clicar Reservar e ver o dialogo com as datas; comparar com a prancha Site-Busca (exportar o PNG para `docs/design/exports/03-e4-reserva/` se quiser) (passos em `docs/handoffs/2026-11-01-m4-02-busca.md`) | M4-02 |
 | 1 | Testar M1-11 no preview: reserva sintetica de nome `José & Ana #2`; aprovar, cancelar com motivo `100%` e rejeitar; conferir o texto no WhatsApp (passos em `docs/handoffs/2026-11-01-m1-11-whatsapp.md`) | M1-11 |
 | 2 | Rodar `evals/sessao-zero.md` em sessao nova com Sonnet (veredito) e registrar | M0-07 |
 | 3 | Preencher `docs/runbook.md` §1 e §4 a §6 (prod, rollback, incidente, observabilidade) | M6-02 |
@@ -153,7 +154,7 @@ Pranchas: Site-Busca, Site-Reserva, Site-MinhaReserva, Painel-Reservas, Painel-C
 | ID | Tarefa | Dep | Gate | Pronto quando | Status | Nota |
 |---|---|---|---|---|---|---|
 | M4-01 | Notificacoes e-mail (Resend)/WhatsApp manual; templates por tenant | M1-07 | — | enviados no dev para contato de teste | [ ] | |
-| M4-02 | Site: busca com calendario, minimo de noites, total por estadia (Site-Busca) | M1-04 | — | reproduz prancha; precos do servidor | [ ] | pode adiantar: nao depende de M2 |
+| M4-02 | Site: busca com calendario, minimo de noites, total por estadia (Site-Busca) | M1-04 | — | *agente:* rota `/api/availability` (anon, sem service role), componente de busca, total do servidor, revisor APROVADO; *humano:* compara com a prancha em localhost e roda o smoke da busca | [h] | 2026-11-01, branch `feat/m4-02-busca-disponibilidade`; revisor APROVADO na 2a rodada (1a: com ressalvas, corrigidas); lacunas da prancha sem suporte no banco (minimo por quarto/periodo, "ultima unidade", cafe incluso, filtros) ficam para tarifacao; handoff `2026-11-01-m4-02-busca.md` |
 | M4-03 | Pagamento: sinal via Pix pelo gateway; webhook idempotente (Site-Reserva passo 3) | M4-02! | — | pagamento de teste confirma reserva | [ ] | D4/D7: escolher o gateway aqui (padrao Mercado Pago, alternativa Asaas) e registrar em CLAUDE.md |
 | M4-04 | Adicionais e reembolso parcial | M4-03 | — | calculo no servidor; smoke-test | [ ] | |
 | M4-05 | Minha reserva: status, saldo, cancelar, mensagens (Site-MinhaReserva) | M4-01 | — | reproduz prancha | [ ] | |
