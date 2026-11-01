@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
+import type { DateRange } from 'react-day-picker';
 import type { Room } from '@/types/database';
 import { BookingForm } from './BookingForm';
 
-export function BookingDialog({ room, onClose }: { room: Room; onClose: () => void }) {
+export function BookingDialog({ room, onClose, initialRange }:
+  { room: Room; onClose: () => void; initialRange?: DateRange }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     document.addEventListener('keydown', onKey);
@@ -26,7 +28,7 @@ export function BookingDialog({ room, onClose }: { room: Room; onClose: () => vo
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
         </button>
-        <BookingForm room={room} onDone={onClose} />
+        <BookingForm room={room} onDone={onClose} initialRange={initialRange} />
       </div>
     </div>
   );
