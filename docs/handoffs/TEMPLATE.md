@@ -9,6 +9,7 @@
 |---|---|
 | Data | AAAA-MM-DD |
 | Branch | `nome-da-branch` |
+| Entrega | id (ex.: E4-A) e tarefas cobertas (ex.: M4-02, M4-06) |
 | Skill / fluxo usado | `desenvolver-feature` / `investigar-bug` / nenhum |
 | Estado | concluido / parcial / bloqueado |
 | Proximo passo imediato | uma frase; quem faz (humano ou agente) |
@@ -22,10 +23,21 @@ Uma frase (a mesma do plano). Se for bug: o sintoma do passo 0 e a causa raiz em
 - `caminho/arquivo` — o que mudou (criado / alterado / removido).
 - Migracao: `supabase/migrations/<timestamp>_<nome>.sql` — aplicada no dev? (sim, confirmado pelo humano em AAAA-MM-DD / nao).
 
+### Commits da entrega
+| Commit | Tarefa | Validacao |
+|---|---|---|
+| `abc1234` mensagem | M0-00 | qual validacao cobre este commit |
+
+### Plano de rollback
+Um unico `git revert` do merge commit deve desfazer a entrega sem quebrar build nem banco. Dizer: se isso vale; o que, alem do revert, precisa ser desfeito (ex.: down de migracao pelo humano); e por que e seguro.
+
 ## 3. Passos pulados e por que
 - Passo N (`nome do passo da skill`) — motivo (ex.: "sem dado novo, migracao nao se aplica").
 
 ## 4. Verificado / nao verificado
+### Validacoes aplicadas
+As escolhidas no plano da entrega, pela matriz do Protocolo v3 em `docs/milestones.md` (UI, API/rotas, Supabase, hooks/settings, docs), cada uma com o resultado. Se o `revisor` nao rodou, justificar (obrigatorio quando ha rota, SQL, RLS, service role, hook ou settings).
+
 | Item | Como | Resultado |
 |---|---|---|
 | `/verificar` (typecheck, lint) | comando | passou / falhou (trecho) / nao rodado (motivo) |

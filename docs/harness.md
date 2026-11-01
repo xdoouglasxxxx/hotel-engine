@@ -83,7 +83,7 @@ Quando uma dessas secoes estiver vazia ou desatualizada, isso e uma pendencia do
 ### Regras de sessao
 
 - **Um editor por vez.** Nunca dois agentes com permissao de escrita no mesmo repo ao mesmo tempo.
-- **Uma sessao, um objetivo.** Feature e bug nao compartilham sessao; `/clear` entre eles.
+- **Uma entrega por branch; sessoes podem ser varias.** Feature e bug nao compartilham sessao nem entrega; `/clear` entre eles. Tamanho, limites e reversao da entrega: `docs/milestones.md` (Protocolo v3).
 - **Handoff e escrito, nunca lembrado.** Tarefa que nao fecha na sessao deixa `docs/handoffs/AAAA-MM-DD-<tarefa>.md` com o relato no formato das skills (objetivo, arquivos, passos pulados, verificado/nao verificado, pendencias, [INCERTO]/[INFERIDO]). `docs/handoffs/` e `TEMPLATE.md` existem.
 
 ---
@@ -114,7 +114,7 @@ Quando uma dessas secoes estiver vazia ou desatualizada, isso e uma pendencia do
 
 ### Contrato de "pronto"
 
-Uma mudanca esta pronta quando: `/verificar` passa; migracao (se houver) foi aplicada pelo humano no projeto **dev** e confirmada; `types/database.ts` reflete o schema; `revisor` sem apontamento bloqueante; relato entregue. Para tarefas de UI, a tela reproduz a prancha correspondente em `docs/design/exports/` (estrutura, hierarquia, estados); diferencas listadas no relato. Faltando um item, nao esta pronta.
+Uma entrega esta pronta quando: `/verificar` passa; migracao (se houver) foi aplicada pelo humano no projeto **dev** e confirmada; `types/database.ts` reflete o schema; `revisor` sem apontamento bloqueante; relato entregue. O `revisor` roda por entrega conforme a matriz de validacoes de `docs/milestones.md`; e obrigatorio em rota, SQL, RLS, service role, hook e settings (nas demais, o agente decide e justifica no handoff). Para tarefas de UI, a tela reproduz a prancha correspondente em `docs/design/exports/` (estrutura, hierarquia, estados); diferencas listadas no relato. Faltando um item, nao esta pronta.
 
 ### Build hermetico
 
