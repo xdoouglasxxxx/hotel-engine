@@ -186,7 +186,7 @@ Quando algo errado passar, responder nesta ordem e criar um teste na camada que 
 | Subagentes | Claude Code | Leitura, revisao, auditoria | Editar |
 | Supabase CLI | Humano | `db push` no dev e prod | Agentes (hook bloqueia) |
 | Vercel CLI / dashboard | Humano | Deploy | Agentes (hook bloqueia `--prod`) |
-| Hermes | Humano | Memoria entre sessoes, orquestrar `claude -p`, jobs agendados de leitura | Editar, revisar seguranca, opinar com modelo local |
+| Hermes | Humano | Memoria entre sessoes, orquestrar `claude -p`, jobs agendados de leitura | Editar, revisar seguranca, opinar sobre arquitetura |
 | MCPs / integracoes novas | — | **[FALTA, P2]** listar cada uma com dono e justificativa antes de ligar | — |
 
 Regra para integracoes: antes de ligar qualquer MCP ou servico, ler `.mcp.json` (se existir) e registrar aqui:

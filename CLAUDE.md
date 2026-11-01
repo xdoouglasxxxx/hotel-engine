@@ -185,7 +185,7 @@ Forma de trabalho:
 - 2026-10-30: modelo de tenant = tabela tenants + tenant_id em todas as tabelas de dominio + RLS por tenant (D2).
 - 2026-10-31: Claude Code pode commitar localmente sem confirmacao; push, deploy, migracao e dependencias seguem humanos. Commit traz o veredito do revisor quando a tarefa exigir.
 - 2026-10-31: develop e a branch de integracao (protegida; PRs do agente apontam para ela); main congelada ate o M6 e protegida; merges sao humanos. Branches de trabalho saem de develop, um objetivo por branch.
-- 2026-10-31: politica de modelo: Claude Code em Sonnet/Fable para rotas, SQL, RLS, revisor, hooks e upgrades; modelo local (qwen3-coder-16k) so para classes certificadas por eval; modelos locais sempre via variante com num_ctx fixado.
+- 2026-10-31: politica de modelo: Claude Code em Sonnet/Fable para rotas, SQL, RLS, revisor, hooks e upgrades.
 - 2026-10-31: a maquina do agente nunca guarda segredo de producao; .env.local contem apenas chaves do hotel-engine-dev, descartaveis. O hook de .env e defesa contra erro, nao contra ma-fe.
 - 2026-10-31: o deploy de producao do v1.0 (codigo original, main) estava publico em [URL Vercel anterior] sem uso real; foi protegido com Deployment Protection "All Deployments" (reversivel). Production Branch segue `main`, congelada ate o M6.
 - 2026-10-31: seed de exemplo do schema.sql trocado por dados sinteticos para publicacao; logica SQL inalterada
@@ -203,3 +203,4 @@ Forma de trabalho:
 - 2026-11-01: runtime Node 22 LTS fixado em `engines`; Next 15 depois do M0-11.
 - 2026-11-01: M1-10 resolvido: Momentos vira "Galeria do hotel", generica por tenant.
 - 2026-11-01: edicao de docs em lote por awk/sed e proibida ao agente; usar Edit por trecho e conferir `git diff --stat` (uma substituicao em lote apagou blocos do milestones.md sem erro visivel).
+- 2026-11-01: modelos locais removidos do projeto por decisao maior do proprietario; Claude Code (Sonnet/Fable) e o unico modelo, para todas as classes de tarefa.
