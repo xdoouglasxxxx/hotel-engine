@@ -29,7 +29,7 @@ Verificacoes do agente: `npm run typecheck` ok; `npm run lint` 0 erros (1 warnin
 | `app/api/bookings/route.ts:33-35` | "data ja passou" usa fuso do servidor; ja existe `site_settings.timezone` | tratar no M2-09 |
 | booking_policy + `app/api/cancel/route.ts:21` | janela de cancelamento depende de `cancelled_by='guest'` vindo da rota | ja conhecido (M2-09) |
 
-Proposta: acrescentar os sete primeiros ao M2-09 (ou a uma linha M1-13 de baixa prioridade). Nenhuma das ressalvas ja conhecidas do M2-09 subiu de severidade.
+Decisao do proprietario (2026-11-01): os achados baixos entram no M2-09; nao havera M1-13. Nenhuma das ressalvas ja conhecidas do M2-09 subiu de severidade.
 
 ## 3. Nao verificado [INCERTO]
 - Smoke-test e qualquer tela (nao ha ambiente no ar nesta sessao).
