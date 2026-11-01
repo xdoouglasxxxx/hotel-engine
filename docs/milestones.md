@@ -36,7 +36,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | Ultima atualizacao | 2026-11-01 (agente: ajustes pos-noite em `chore/pos-noite-ajustes`; M0-16 aceita pelo humano) |
 | Milestones ativos | M0 (fechando) e M1 (em andamento, autorizado) |
 | Branch de trabalho | `develop` (integracao; branches de trabalho saem dela) |
-| Modelo em uso | local `qwen3-coder-16k` certificado so para leitura/triagem; Sonnet/Fable para rotas, SQL, RLS, revisor, upgrades (ver harness, eixo 4) |
+| Modelo em uso | Sonnet/Fable para todas as classes de tarefa (ver CLAUDE.md > Decisoes) |
 | Lote sugerido para o agente | M4-02 + M4-06 + M2-01 (M1-10 e gate humano) |
 | Bloqueios | nenhum de agente. Ressalvas medias do revisor movidas para M2-09 |
 
@@ -45,7 +45,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | Prioridade | Item | Libera |
 |---|---|---|
 | 1 | Testar M1-11 no preview: reserva sintetica de nome `José & Ana #2`; aprovar, cancelar com motivo `100%` e rejeitar; conferir o texto no WhatsApp (passos em `docs/handoffs/2026-11-01-m1-11-whatsapp.md`) | M1-11 |
-| 2 | Rodar `evals/sessao-zero.md` em sessao nova com Sonnet (veredito) e registrar; registrar tambem a rodada com `qwen3-coder-16k` como certificacao local | M0-07 |
+| 2 | Rodar `evals/sessao-zero.md` em sessao nova com Sonnet (veredito) e registrar | M0-07 |
 | 3 | Preencher `docs/runbook.md` §1 e §4 a §6 (prod, rollback, incidente, observabilidade) | M6-02 |
 | 4 | Criar o projeto novo `hotel-engine` na Vercel so com Preview (sem Production) e renomear repo e projeto prod (M0-14) | M0-14, M6-04 |
 | 5 | Decidir o destino de Momentos/galeria (generica por tenant ou remover) e registrar em `CLAUDE.md > Decisoes` | M1-10 |
@@ -76,7 +76,7 @@ Legenda: **Dep** = IDs de que depende (`!` = dura) · **Gate** = decisao humana 
 | D6 | SaaS ou instancia por cliente | fechada 2026-11-01 (CLAUDE.md) | SaaS multi-tenant em um deploy | — |
 | D7 | Gateway de pagamento (qual) | fechada 2026-11-01 (CLAUDE.md) | decidido em M4-03; padrao Mercado Pago, alternativa Asaas | — |
 | D8 | Provedor de e-mail/WhatsApp | fechada 2026-11-01 (CLAUDE.md) | e-mail Resend em M4-01; WhatsApp manual via wa.me ate o M5 | — |
-| D9 | Politica de modelo: classes de tarefa x modelo minimo | decidida 2026-10-31 (harness, eixo 4) | local so para classes certificadas por eval | — |
+| D9 | Politica de modelo: classes de tarefa x modelo minimo | decidida 2026-10-31 (harness, eixo 4) | Claude Code (Sonnet/Fable) para todas as classes; modelos locais removidos em 2026-11-01 | — |
 
 ---
 
@@ -91,7 +91,7 @@ Criterio de saida: `test-hooks` verde; `/verificar` roda typecheck+lint; sessao-
 | M0-04 | Remover dados pessoais do cliente anterior | M0-03 | — | grep zero em app/components/lib | [x] | 2026-10-30 |
 | M0-05 | Resumo executivo do harness + correcoes no CLAUDE.md | M0-01 | — | commitado | [x] | 2026-10-30, fe6aab4 |
 | M0-06 | Protocolo de eval em duas etapas + workflow versionado | M0-05 | — | commitado | [x] | 2026-10-30, fe6aab4 |
-| M0-07 | Eval sessao-zero manual | M0-05! | — | *humano:* roda em sessao nova com o modelo padrao; *agente:* registra. 11/11 fecha; rodadas com modelo local vao para a tabela de execucoes como certificacao | [h] | humano roda; triagens 2026-10-30 (subagente 8-10/11; gemma 5/11) |
+| M0-07 | Eval sessao-zero manual | M0-05! | — | *humano:* roda em sessao nova com o modelo padrao; *agente:* registra. 11/11 fecha | [h] | humano roda; triagem 2026-10-30 (subagente 8-10/11) |
 | M0-08 | ESLint configurado; /verificar roda lint sem prompt | M0-05! | — | `npm run lint` nao interativo, 0 erros | [x] | 2026-10-31; `eslint .` + `eslint.config.mjs` (FlatCompat), nada instalado; 1 warning em postcss.config.mjs |
 | M0-09 | Hook de Stop com typecheck + 4 casos no test-hooks | M0-08 | — | FALHAS: 0 (41 casos) | [x] | 2026-10-31; `.claude/hooks/stop-verify.js`; ressalvas do revisor (working tree, timeout) tratadas no commit extra; resta so repo de 1 commit (baixa) |
 | M0-10 | Allowlist de permissoes (leitura, verificacao, edicao e git local) | M0-05! | — | test-hooks verde; sem push/reset/rebase/filter-repo na allow; commit permitido | [x] | 2026-10-31; 4 rodadas do revisor, ultima APROVADO COM RESSALVAS (medias/baixas). Pendentes: `$(`/crase bloqueia commit com heredoc (usar `git commit -F`); glob com `./app/*` e falso positivo. Resolvida: deny de `.env` por lista explicita, `.env.example` legivel. Hook e heuristico (harness, Riscos aceitos) |
